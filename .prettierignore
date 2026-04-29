@@ -3,4 +3,7 @@ dist/
 .astro/
 test-results/
 playwright-report/
-.DS_Store
+AGENTS.md
+backlog/
+base/
+docs/folder-structure.md

@@ -1,0 +1,38 @@
+---
+import "../styles/global.css";
+
+type Props = {
+  title: string;
+  description?: string;
+};
+
+const { title, description = "A static catalogue of shared articles." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <a class="site-title" href="/">Shared Article Catalogue</a>
+          <nav class="site-nav" aria-label="Primary">
+            <a href="/articles/">Articles</a>
+          </nav>
+        </div>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <p>Static Markdown articles, built for GitHub Pages.</p>
+      </footer>
+    </div>
+  </body>
+</html>

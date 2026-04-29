@@ -1,0 +1,14 @@
+---
+import { getCollection } from "astro:content";
+import ArticleIndex from "../components/ArticleIndex.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPublicArticles } from "../lib/articles";
+import { DEFAULT_PAGE_SIZE, paginateItems } from "../lib/pagination";
+
+const articles = getPublicArticles(await getCollection("articles"));
+const page = paginateItems(articles, 1, DEFAULT_PAGE_SIZE);
+---
+
+<BaseLayout title="Shared Article Catalogue">
+  <ArticleIndex page={page} />
+</BaseLayout>

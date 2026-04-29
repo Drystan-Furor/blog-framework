@@ -14,3 +14,12 @@
 - Refined Sprint 1 output written to `backlog/refined/sprint1-R.md` with TDD-focused user stories, Given/When/Then acceptance criteria, validations, story ordering, assumptions, and exit criteria.
 - Sprint 1 remains scoped to proving the static Astro content spine: structure, ADRs, content schema, Markdown article rendering, static routes, index grid, responsive pagination, system theme, and Playwright smoke coverage.
 - Remaining open decisions are intentionally tracked in the refined output: Node/npm version, article source path compatibility, article URL shape, required catalogue metadata, tablet/mobile pagination details, token storage, and Playwright browser scope.
+
+## 2026-04-29 - Sprint 1 Static Blog Spine Implemented
+
+- Input read and executed from `backlog/refined/sprint1-R.md`.
+- Implementation branch: `feature/sprint1-static-blog-spine`, created from `master`, then the refined sprint input commit was cherry-picked onto it.
+- Delivered an Astro 6 static starter with Markdown article folders at `src/content/articles/<slug>/index.md`, content schema validation in `src/content.config.ts`, static article routes at `/articles/<slug>/`, a browseable home/articles index grid, responsive CSS, system light/dark theme tokens, and a `new:article` script.
+- Added ADRs for framework and UI-library decisions in `docs/adr/0001-framework.md` and `docs/adr/0002-ui-library.md`.
+- Added Sprint 1 validation: 19 Vitest unit tests for structure, ADRs, content schema, routing, and pagination; 4 Playwright smoke tests for home, article navigation, responsive overflow, and shared theme tokens.
+- Verification completed: `npm run format:check`, `npm run ci`, and `npm audit --omit=dev` all pass. `npm run build` produces `dist/index.html`, `dist/articles/index.html`, and `dist/articles/hello-world/index.html`.

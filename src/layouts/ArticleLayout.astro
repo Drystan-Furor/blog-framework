@@ -1,0 +1,34 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { formatArticleDate, getArticleSlug, type ArticleEntry } from "../lib/articles";
+import { getArticleImageUrl } from "../lib/article-images";
+
+type Props = {
+  article: ArticleEntry;
+};
+
+const { article } = Astro.props;
+const slug = getArticleSlug(article);
+const imageUrl = getArticleImageUrl(slug, article.data.image);
+---
+
+<BaseLayout title={`${article.data.title} | Shared Article Catalogue`} description={article.data.summary}>
+  <article class="page-section article-page">
+    <header class="article-hero">
+      <p class="article-hero__meta">
+        Subject: {article.data.subject} · {formatArticleDate(article.data.publishedAt)}
+      </p>
+      <h1>{article.data.title}</h1>
+      {article.data.subtitle && <p class="article-hero__subtitle">{article.data.subtitle}</p>}
+      <p class="article-hero__summary">{article.data.summary}</p>
+      <img
+        class="article-hero__image"
+        src={imageUrl}
+        alt={`Abstract reading desk for ${article.data.title}`}
+      />
+    </header>
+    <div class="article-body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

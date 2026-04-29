@@ -1,0 +1,28 @@
+---
+import { formatArticleDate, getArticleSlug, getArticleUrl, type ArticleEntry } from "../lib/articles";
+import { getArticleImageUrl } from "../lib/article-images";
+
+type Props = {
+  article: ArticleEntry;
+};
+
+const { article } = Astro.props;
+const slug = getArticleSlug(article);
+const imageUrl = getArticleImageUrl(slug, article.data.image);
+---
+
+<article class="article-card" data-testid="article-card">
+  <a class="article-card__link" data-testid="article-card-link" href={getArticleUrl(article)}>
+    <img
+      class="article-card__image"
+      src={imageUrl}
+      alt={`Abstract reading desk for ${article.data.title}`}
+      loading="lazy"
+    />
+    <div class="article-card__body">
+      <p class="article-card__meta">{formatArticleDate(article.data.publishedAt)}</p>
+      <h2 class="article-card__title">{article.data.title}</h2>
+      <p class="article-card__summary">{article.data.summary}</p>
+    </div>
+  </a>
+</article>

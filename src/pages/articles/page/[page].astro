@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import ArticleIndex from "../../../components/ArticleIndex.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getPublicArticles } from "../../../lib/articles";
+import { DEFAULT_PAGE_SIZE, getTotalPages, paginateItems } from "../../../lib/pagination";
+
+export async function getStaticPaths() {
+  const articles = getPublicArticles(await getCollection("articles"));
+  const totalPages = getTotalPages(articles.length, DEFAULT_PAGE_SIZE);
+
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
+    const pageNumber = index + 2;
+
+    return {
+      params: { page: String(pageNumber) },
+      props: { articles, pageNumber }
+    };
+  });
+}
+
+const { articles, pageNumber } = Astro.props;
+const page = paginateItems(articles, pageNumber, DEFAULT_PAGE_SIZE);
+---
+
+<BaseLayout title={`Articles Page ${pageNumber} | Shared Article Catalogue`}>
+  <ArticleIndex page={page} />
+</BaseLayout>

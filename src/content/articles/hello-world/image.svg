@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Abstract reading desk</title>
+  <desc id="desc">A desk with layered article pages and a highlighted note.</desc>
+  <rect width="1200" height="800" fill="#f7f8f3"/>
+  <rect x="120" y="120" width="960" height="560" rx="32" fill="#2f6f62"/>
+  <rect x="190" y="190" width="580" height="390" rx="24" fill="#ffffff"/>
+  <rect x="260" y="250" width="650" height="410" rx="24" fill="#f2c14e"/>
+  <rect x="230" y="220" width="650" height="410" rx="24" fill="#fffaf0"/>
+  <path d="M315 325h410M315 395h335M315 465h450" stroke="#263238" stroke-width="32" stroke-linecap="round"/>
+  <path d="M820 255l100 42-70 168-100-42z" fill="#a33d5f"/>
+  <circle cx="903" cy="315" r="26" fill="#f7f8f3"/>
+</svg>

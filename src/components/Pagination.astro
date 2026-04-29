@@ -1,0 +1,38 @@
+---
+import type { PaginationPage } from "../lib/pagination";
+
+type Props = {
+  page: PaginationPage<unknown>;
+  basePath?: string;
+};
+
+const { page, basePath = "/articles" } = Astro.props;
+
+function pageHref(pageNumber: number) {
+  return pageNumber === 1 ? `${basePath}/` : `${basePath}/page/${pageNumber}/`;
+}
+---
+
+{
+  page.totalPages > 1 && (
+    <nav class="pagination" aria-label="Article pages">
+      <div>
+        {page.hasPrevious && (
+          <a class="pagination__link" href={pageHref(page.previousPage ?? 1)}>
+            Previous
+          </a>
+        )}
+      </div>
+      <span class="pagination__status">
+        Page {page.page} of {page.totalPages}
+      </span>
+      <div>
+        {page.hasNext && (
+          <a class="pagination__link" href={pageHref(page.nextPage ?? page.totalPages)}>
+            Next
+          </a>
+        )}
+      </div>
+    </nav>
+  )
+}

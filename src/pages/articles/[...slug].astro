@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { getPublicArticles } from "../../lib/articles";
+import { createArticleRoutes } from "../../lib/routes";
+
+export async function getStaticPaths() {
+  const articles = getPublicArticles(await getCollection("articles"));
+  return createArticleRoutes(articles);
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<ArticleLayout article={article}>
+  <Content />
+</ArticleLayout>
