@@ -22,3 +22,16 @@ No blocker handoff is required. Remaining refinement questions are captured insi
 - Search depth: title/metadata only or full article body.
 - Whether article source URLs or the catalogue URLs should be canonical.
 - WCAG target level and protected branch name.
+
+## 2026-04-29 - Sprint 1 Refinement Completed
+
+Status: completed for the requested Sprint 1 refinement task.
+
+Completed outputs:
+
+- `backlog/sprint/sprint1.md`: read as the sprint input.
+- `backlog/refined/sprint1-R.md`: written with TDD spec-driven user stories, acceptance criteria, validations, working assumptions, story execution order, validation matrix, and exit criteria.
+- `base/memories.md`: updated with the Sprint 1 refinement memory.
+- `base/handoffs.md`: updated with this completion summary.
+
+No blocker handoff is required. Remaining refinement questions are captured inside `backlog/refined/sprint1-R.md`.
