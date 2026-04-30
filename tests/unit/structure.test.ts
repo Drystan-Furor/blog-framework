@@ -42,4 +42,23 @@ describe("project structure", () => {
 
     expect(requiredScripts.filter((script) => !packageJson.scripts?.[script])).toEqual([]);
   });
+
+  it("defines a GitHub Pages workflow that deploys the built static site", () => {
+    const workflow = readFileSync(join(root, ".github/workflows/pages.yml"), "utf8");
+
+    expect(workflow).toContain('branches: ["master"]');
+    expect(workflow).toContain("pages: write");
+    expect(workflow).toContain("id-token: write");
+    expect(workflow).toContain("uses: withastro/action@v6");
+    expect(workflow).toContain("build-cmd: npm run build");
+    expect(workflow).toContain('GITHUB_PAGES: "true"');
+    expect(workflow).toContain("uses: actions/deploy-pages@v5");
+  });
+
+  it("configures Astro for the repository GitHub Pages URL", () => {
+    const config = readFileSync(join(root, "astro.config.mjs"), "utf8");
+
+    expect(config).toContain('site: "https://drystan-furor.github.io"');
+    expect(config).toContain('base: isGitHubPagesBuild ? "/blog-framework" : "/"');
+  });
 });

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { pathWithBase } from "../lib/routes";
 
 type Props = {
   title: string;
@@ -7,6 +8,8 @@ type Props = {
 };
 
 const { title, description = "A static catalogue of shared articles." } = Astro.props;
+const homeHref = pathWithBase("/");
+const articlesHref = pathWithBase("/articles/");
 ---
 
 <!doctype html>
@@ -21,9 +24,9 @@ const { title, description = "A static catalogue of shared articles." } = Astro.
     <div class="site-shell">
       <header class="site-header">
         <div class="site-header__inner">
-          <a class="site-title" href="/">Shared Article Catalogue</a>
+          <a class="site-title" href={homeHref}>Shared Article Catalogue</a>
           <nav class="site-nav" aria-label="Primary">
-            <a href="/articles/">Articles</a>
+            <a href={articlesHref}>Articles</a>
           </nav>
         </div>
       </header>

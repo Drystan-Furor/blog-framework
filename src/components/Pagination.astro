@@ -1,15 +1,16 @@
 ---
 import type { PaginationPage } from "../lib/pagination";
+import { pathWithBase } from "../lib/routes";
 
 type Props = {
   page: PaginationPage<unknown>;
-  basePath?: string;
+  basePath?: `/${string}`;
 };
 
 const { page, basePath = "/articles" } = Astro.props;
 
 function pageHref(pageNumber: number) {
-  return pageNumber === 1 ? `${basePath}/` : `${basePath}/page/${pageNumber}/`;
+  return pathWithBase(pageNumber === 1 ? `${basePath}/` : `${basePath}/page/${pageNumber}/`);
 }
 ---
 
