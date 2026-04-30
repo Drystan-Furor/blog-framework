@@ -1,36 +1,42 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 
-const slug = process.argv[2];
-
-if (!slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-  console.error("Usage: npm run new:article -- article-slug");
-  process.exit(1);
+export function assertValidSlug(slug) {
+  if (!slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+    throw new Error("Usage: npm run new:article -- article-slug");
+  }
 }
 
-const articleDir = join(process.cwd(), "src", "content", "articles", slug);
-const today = new Date().toISOString().slice(0, 10);
+export function titleFromSlug(slug) {
+  return slug
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
 
-await mkdir(articleDir, { recursive: false });
-await writeFile(
-  join(articleDir, "index.md"),
-  `---
-title: "New Shared Article"
+export function createArticleMarkdown(slug, today) {
+  const title = titleFromSlug(slug);
+
+  return `---
+title: "${title}"
 subtitle: ""
 summary: "Write the first sentence. Write the second sentence. Write the third sentence."
 subject: "Uncategorized"
 publishedAt: "${today}"
 image: "./image.svg"
 tags: []
-draft: true
+sourceUrl: "https://example.com/${slug}"
+sharedAt: "${today}"
+draft: false
 ---
 
 Replace this starter body with the article notes.
-`
-);
-await writeFile(
-  join(articleDir, "image.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+`;
+}
+
+export function createArticleImageSvg() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
   <title id="title">Article image placeholder</title>
   <desc id="desc">Layered paper shapes for a shared article.</desc>
   <rect width="1200" height="800" fill="#f8faf7"/>
@@ -40,7 +46,27 @@ await writeFile(
   <path d="M300 305h540M300 380h420M300 455h500" stroke="#2f3842" stroke-width="34" stroke-linecap="round"/>
   <circle cx="900" cy="280" r="86" fill="#a33d5f"/>
 </svg>
-`
-);
+`;
+}
 
-console.log(`Created src/content/articles/${slug}/`);
+export async function createArticle(slug, cwd = process.cwd()) {
+  assertValidSlug(slug);
+
+  const articleDir = join(cwd, "src", "content", "articles", slug);
+  const today = new Date().toISOString().slice(0, 10);
+
+  await mkdir(articleDir, { recursive: false });
+  await writeFile(join(articleDir, "index.md"), createArticleMarkdown(slug, today));
+  await writeFile(join(articleDir, "image.svg"), createArticleImageSvg());
+
+  return `Created src/content/articles/${slug}/`;
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    console.log(await createArticle(process.argv[2]));
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : error);
+    process.exit(1);
+  }
+}

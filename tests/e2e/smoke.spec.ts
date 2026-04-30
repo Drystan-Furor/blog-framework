@@ -1,12 +1,15 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("@smoke static article catalogue", () => {
-  test("home page shows the Hello World article card", async ({ page }) => {
+  test("home page shows public article cards", async ({ page }) => {
     await page.goto("/");
 
     await expect(page.getByRole("heading", { name: "Shared Article Catalogue" })).toBeVisible();
     await expect(
       page.getByTestId("article-card").filter({ hasText: "Hello World Shared Article" })
+    ).toBeVisible();
+    await expect(
+      page.getByTestId("article-card").filter({ hasText: "Prompt Design" })
     ).toBeVisible();
     await expect(
       page.getByAltText("Abstract reading desk for Hello World Shared Article")
@@ -15,7 +18,10 @@ test.describe("@smoke static article catalogue", () => {
 
   test("article card navigates to the static article page", async ({ page }) => {
     await page.goto("/");
-    await page.getByTestId("article-card-link").click();
+    await page
+      .getByTestId("article-card")
+      .filter({ hasText: "Hello World Shared Article" })
+      .click();
 
     await expect(page).toHaveURL(/\/articles\/hello-world\/$/);
     await expect(page.getByRole("heading", { name: "Hello World Shared Article" })).toBeVisible();
@@ -42,7 +48,7 @@ test.describe("@smoke static article catalogue", () => {
   });
 
   test("index and article pages expose shared theme tokens", async ({ page }) => {
-    for (const path of ["/", "/articles/hello-world/"]) {
+    for (const path of ["/", "/articles/hello-world/", "/articles/prompt-design/"]) {
       await page.goto(path);
       const token = await page
         .locator("html")
