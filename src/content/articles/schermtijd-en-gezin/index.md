@@ -1,8 +1,10 @@
 ---
 title: "Schermtijd En Gezin"
 subtitle: ""
-summary: "Write the first sentence. Write the second sentence. Write the third sentence."
-subject: "Uncategorized"
+summary: "Het scherm. Dat handige, glimmende ding dat altijd ping zegt op precies het verkeerde moment. We kunnen er van
+alles mee, behalve er spontaan gelukkiger van worden. En daarom wordt het tijd voor iets radicaals. Iets dat klinkt als
+een wellness-retreat maar dan zonder badjassen: één dag per week schermvrij."
+subject: "Schermtijd"
 publishedAt: "2025-11-22"
 image: "./img.png"
 tags: [life hacks, schermtijd]
