@@ -73,6 +73,10 @@ Create a starter folder with:
 npm run new:article -- article-slug
 ```
 
+```bash
+npm run new:article -- schermtijd-en-gezin
+```
+
 Example:
 
 ```bash
