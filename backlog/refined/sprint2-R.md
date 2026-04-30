@@ -45,7 +45,8 @@ verification.
 - `GITHUB_PAGES=true npm run build` emits static output with `/blog-framework/` asset and internal link prefixes.
 - Published GitHub Pages returns HTTP 200 for the home page and at least one article page.
 - Search, tags, sitemap, RSS, and metadata artifacts include only public articles.
-- The starter remains easy to duplicate by changing site metadata and article content without rewriting the build system.
+- The starter remains easy to duplicate by changing site metadata and article content without rewriting the build
+  system.
 
 ## Story Execution Order
 
@@ -100,15 +101,18 @@ Open questions:
 
 Backlog: PB-018
 
-User story: As a reader, I want related article suggestions, so I can find other shared articles that connect by topic or
+User story: As a reader, I want related article suggestions, so I can find other shared articles that connect by topic
+or
 subject.
 
 Acceptance criteria:
 
-- Given an article has tags, when related articles are calculated, then articles sharing tags rank above articles sharing
+- Given an article has tags, when related articles are calculated, then articles sharing tags rank above articles
+  sharing
   only subject.
 - Given no tags overlap, when articles share subject, then subject matches can still appear.
-- Given candidates tie, when ordering is resolved, then recent public articles rank before older articles and slug breaks
+- Given candidates tie, when ordering is resolved, then recent public articles rank before older articles and slug
+  breaks
   final ties.
 - Given the current article is evaluated, when related results render, then the current article is never included.
 - Given fewer than the target number of related articles exist, when the footer renders, then it shows only available
@@ -184,7 +188,8 @@ Acceptance criteria:
   base.
 - Given I type a query matching an article title, when results update, then title matches rank above summary, subject,
   tag, and body-only matches.
-- Given I type a query matching tags or subject, when results update, then matching public articles are shown with title,
+- Given I type a query matching tags or subject, when results update, then matching public articles are shown with
+  title,
   summary, and link.
 - Given there are no matches, when results update, then a clear empty state is shown.
 - Given JavaScript is disabled, when the search page loads, then the rest of the static site and article reading remain
@@ -254,14 +259,17 @@ descriptions, canonical URLs, social previews, and structured data.
 
 Acceptance criteria:
 
-- Given an article page renders, when the HTML is inspected, then it includes a specific title, meta description, canonical
+- Given an article page renders, when the HTML is inspected, then it includes a specific title, meta description,
+  canonical
   URL, robots metadata, Open Graph title, Open Graph description, Open Graph type, and Open Graph URL.
 - Given article metadata is available, when structured data renders, then schema.org Article JSON-LD includes headline,
   description, datePublished, URL, and image when available.
 - Given the GitHub Pages base path is active, when canonical and Open Graph URLs render, then they use
   `https://drystan-furor.github.io/blog-framework/` routes.
-- Given an index or search page renders, when metadata is inspected, then page-specific title and description are present.
-- Given draft articles exist, when metadata artifacts are generated, then drafts remain excluded from public route lists.
+- Given an index or search page renders, when metadata is inspected, then page-specific title and description are
+  present.
+- Given draft articles exist, when metadata artifacts are generated, then drafts remain excluded from public route
+  lists.
 
 TDD validations:
 
@@ -285,12 +293,14 @@ Open questions:
 
 Backlog: PB-019
 
-User story: As a site owner, I want a generated sitemap, so crawlers can discover public catalogue pages on GitHub Pages.
+User story: As a site owner, I want a generated sitemap, so crawlers can discover public catalogue pages on GitHub
+Pages.
 
 Acceptance criteria:
 
 - Given `npm run build` runs, when `dist/sitemap.xml` is inspected, then it exists.
-- Given public pages exist, when the sitemap is parsed, then it includes home, articles index, article pages, search page,
+- Given public pages exist, when the sitemap is parsed, then it includes home, articles index, article pages, search
+  page,
   and any public tag/category pages selected for Sprint 2.
 - Given draft articles exist, when the sitemap is parsed, then draft article URLs are absent.
 - Given GitHub Pages base is active, when URLs are emitted, then they are absolute URLs under
@@ -324,7 +334,8 @@ User story: As a reader, I want an RSS feed, so I can follow newly catalogued sh
 Acceptance criteria:
 
 - Given `npm run build` runs, when `dist/rss.xml` or `dist/feed.xml` is inspected, then it exists.
-- Given public articles exist, when the feed is parsed, then it includes latest public articles with title, link, summary,
+- Given public articles exist, when the feed is parsed, then it includes latest public articles with title, link,
+  summary,
   published date, and stable GUID.
 - Given draft articles exist, when the feed is parsed, then drafts are absent.
 - Given GitHub Pages base is active, when feed links are emitted, then they are absolute URLs under the published site
@@ -334,7 +345,8 @@ Acceptance criteria:
 
 TDD validations:
 
-- Red: add feed generation unit tests or XML artifact tests for item fields, ordering, draft exclusion, and absolute URLs.
+- Red: add feed generation unit tests or XML artifact tests for item fields, ordering, draft exclusion, and absolute
+  URLs.
 - Red: add a build output check for the selected feed path.
 - Green: implement the minimal RSS endpoint or build script.
 - Refactor: share public article sorting with previous/next and sitemap generation.
@@ -361,12 +373,14 @@ Acceptance criteria:
 
 - Given code is pushed to the default branch, when GitHub Actions runs, then install, lint, Astro check, unit tests,
   build, and smoke tests complete.
-- Given a pull request is opened, when GitHub Actions runs, then the same validation path runs without publishing a Pages
+- Given a pull request is opened, when GitHub Actions runs, then the same validation path runs without publishing a
+  Pages
   deployment from untrusted branches.
 - Given dependencies are installed in CI, when the workflow runs, then it uses `npm ci` or the Astro action's lockfile
   aware install behavior.
 - Given a validation step fails, when the workflow completes, then the failed command is visible in Actions logs.
-- Given Pages deployment exists, when CI and deploy responsibilities overlap, then the workflow remains simple and avoids
+- Given Pages deployment exists, when CI and deploy responsibilities overlap, then the workflow remains simple and
+  avoids
   duplicate builds where possible.
 
 TDD validations:
@@ -427,21 +441,22 @@ Open questions:
 
 ## Sprint 2 Validation Matrix
 
-| Validation                              | Stories Covered            | Expected Command or Check                                             |
-|-----------------------------------------|----------------------------|------------------------------------------------------------------------|
-| Adjacent and related article unit tests | SP-11, SP-12               | `npm run test:unit`                                                    |
-| Article footer Playwright checks        | SP-11, SP-12               | `npm run test:e2e:smoke` or targeted Playwright test                   |
-| Search document generation tests        | SP-13                      | `npm run test:unit` and build artifact check                           |
-| Search UI/ranking tests                 | SP-14                      | `npm run test:unit` plus Playwright search flow                        |
-| Tag/category route tests                | SP-15                      | `npm run test:unit` plus Playwright tag navigation                     |
-| SEO metadata assertions                 | SP-16                      | Unit URL helper tests plus DOM/Playwright metadata checks              |
-| Sitemap and RSS artifact checks         | SP-17, SP-18               | `npm run build` and XML artifact parsing                               |
-| CI workflow validation                  | SP-19                      | `npm run ci` and workflow structure test                               |
-| Pages deployment validation             | SP-20                      | `GITHUB_PAGES=true npm run build`, GitHub Pages settings, live URL 200 |
+| Validation                              | Stories Covered | Expected Command or Check                                              |
+|-----------------------------------------|-----------------|------------------------------------------------------------------------|
+| Adjacent and related article unit tests | SP-11, SP-12    | `npm run test:unit`                                                    |
+| Article footer Playwright checks        | SP-11, SP-12    | `npm run test:e2e:smoke` or targeted Playwright test                   |
+| Search document generation tests        | SP-13           | `npm run test:unit` and build artifact check                           |
+| Search UI/ranking tests                 | SP-14           | `npm run test:unit` plus Playwright search flow                        |
+| Tag/category route tests                | SP-15           | `npm run test:unit` plus Playwright tag navigation                     |
+| SEO metadata assertions                 | SP-16           | Unit URL helper tests plus DOM/Playwright metadata checks              |
+| Sitemap and RSS artifact checks         | SP-17, SP-18    | `npm run build` and XML artifact parsing                               |
+| CI workflow validation                  | SP-19           | `npm run ci` and workflow structure test                               |
+| Pages deployment validation             | SP-20           | `GITHUB_PAGES=true npm run build`, GitHub Pages settings, live URL 200 |
 
 ## Sprint 2 Exit Criteria
 
-- A reader can browse from article to adjacent article, related articles, tag pages, search results, and back to articles
+- A reader can browse from article to adjacent article, related articles, tag pages, search results, and back to
+  articles
   without server support.
 - A maintainer can add Markdown articles and trust the build to update search, sitemap, RSS, tag pages, and navigation.
 - Crawlers and feed readers have static metadata artifacts for public content.
