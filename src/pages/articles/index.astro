@@ -9,6 +9,10 @@ const articles = getPublicArticles(await getCollection("articles"));
 const page = paginateItems(articles, 1, DEFAULT_PAGE_SIZE);
 ---
 
-<BaseLayout title="Articles | Shared Article Catalogue">
+<BaseLayout
+  title="Articles | Shared Article Catalogue"
+  description="Browse every public article in the shared catalogue."
+  path="/articles/"
+>
   <ArticleIndex page={page} />
 </BaseLayout>

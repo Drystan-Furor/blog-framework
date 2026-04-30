@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pathWithBase } from "../../lib/routes";
+
+const searchIndexUrl = pathWithBase("/search-index.json");
+---
+
+<BaseLayout
+  title="Search | Shared Article Catalogue"
+  description="Search saved shared articles by title, subject, tag, summary, or body text."
+  path="/search/"
+>
+  <section class="page-section search-page" data-search-app data-index-url={searchIndexUrl}>
+    <p class="page-kicker">Search</p>
+    <h1 class="page-title">Find Articles</h1>
+    <p class="page-intro">Search the static catalogue without a server.</p>
+
+    <label class="search-field">
+      <span>Search articles</span>
+      <input type="search" autocomplete="off" />
+    </label>
+
+    <p class="search-status" data-search-status>Type to search saved articles.</p>
+    <p class="search-status" data-search-empty data-testid="search-empty" hidden>
+      No matching articles.
+    </p>
+    <ol class="search-results" data-search-results></ol>
+  </section>
+</BaseLayout>
+
+<script>
+  import { searchDocuments } from "../../lib/search";
+
+  const app = document.querySelector<HTMLElement>("[data-search-app]");
+  const input = app?.querySelector<HTMLInputElement>("input[type='search']");
+  const resultsList = app?.querySelector<HTMLElement>("[data-search-results]");
+  const status = app?.querySelector<HTMLElement>("[data-search-status]");
+  const empty = app?.querySelector<HTMLElement>("[data-search-empty]");
+  let documents: import("../../lib/search").SearchDocument[] = [];
+
+  function escapeHtml(value: string) {
+    return value.replace(/[&<>"']/g, (character: string) => {
+      const entities = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      };
+      return entities[character as keyof typeof entities];
+    });
+  }
+
+  function render() {
+    if (!input || !resultsList || !status || !empty) return;
+
+    const query = input.value;
+    const results = searchDocuments(documents, query);
+    const hasQuery = query.trim().length > 0;
+
+    status.hidden = hasQuery;
+    empty.hidden = !hasQuery || results.length > 0;
+    resultsList.innerHTML = results
+      .map(
+        (result) => `
+          <li class="search-result" data-testid="search-result">
+            <a href="${escapeHtml(result.url)}">${escapeHtml(result.title)}</a>
+            <p>${escapeHtml(result.summary)}</p>
+          </li>
+        `
+      )
+      .join("");
+  }
+
+  async function bootSearch() {
+    if (!app || !input) return;
+
+    const indexUrl = app.getAttribute("data-index-url");
+    if (!indexUrl) return;
+
+    const response = await fetch(indexUrl);
+    documents = await response.json();
+    input.addEventListener("input", render);
+    render();
+  }
+
+  bootSearch();
+</script>

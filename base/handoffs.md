@@ -79,3 +79,27 @@ Verification:
 - `npm run ci`: passed.
 
 No blocker handoff is required. Remaining refinement questions are captured inside `backlog/refined/sprint2-R.md`, especially search depth, tag/category taxonomy, related article UI/count, canonical URL policy, RSS path/limit, CI workflow split, and default branch naming.
+
+## 2026-04-30 - Sprint 2 Browseable Catalogue Completed
+
+Status: completed for the requested Sprint 2 implementation task.
+
+Completed outputs:
+
+- `src/lib/articles.ts`, `src/lib/search.ts`, `src/lib/taxonomy.ts`, `src/lib/site.ts`, and `src/lib/site-artifacts.ts`: shared helpers for public sorting, adjacent articles, related ranking, static search, taxonomy slugs/groups, absolute URLs, sitemap XML, and RSS XML.
+- `src/layouts/BaseLayout.astro` and `src/layouts/ArticleLayout.astro`: SEO metadata, canonical/Open Graph tags, Article JSON-LD, tag/subject links, previous/next navigation, and related articles.
+- `src/pages/search/index.astro`, `src/pages/search-index.json.ts`, `src/pages/tags/[tag].astro`, `src/pages/subjects/[subject].astro`, `src/pages/sitemap.xml.ts`, and `src/pages/rss.xml.ts`: static browse/search/SEO/feed surfaces.
+- `.github/workflows/ci.yml`: pull request/default branch CI checks without Pages deployment.
+- `tests/unit/article-discovery.test.ts`, `tests/unit/search.test.ts`, `tests/unit/taxonomy.test.ts`, `tests/unit/site-artifacts.test.ts`, and expanded smoke/structure tests for Sprint 2 behavior.
+
+Verification:
+
+- Red Sprint 2 unit tests were run first and failed for the expected missing helpers/workflow.
+- `npm run test:unit -- article-discovery search taxonomy site-artifacts structure`: passed after implementation.
+- `npm run test:e2e:smoke`: passed with 8 smoke tests.
+- `GITHUB_PAGES=true npm run build`: passed and emitted base-prefixed search links plus absolute sitemap/RSS URLs.
+- `npm run format:check`: passed.
+- `git diff --check`: passed.
+- `npm run ci`: passed.
+
+No blocker handoff is required. One pre-existing workspace edit remains unstaged in `backlog/refined/sprint2-R.md`; it is formatting-only input-file churn and was not included in the implementation commit.

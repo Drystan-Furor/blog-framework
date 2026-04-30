@@ -1,15 +1,27 @@
 ---
 import "../styles/global.css";
 import { pathWithBase } from "../lib/routes";
+import { absoluteUrl, SITE_DESCRIPTION } from "../lib/site";
 
 type Props = {
   title: string;
   description?: string;
+  path?: `/${string}`;
+  ogType?: "website" | "article";
+  structuredData?: Record<string, unknown>;
 };
 
-const { title, description = "A static catalogue of shared articles." } = Astro.props;
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  path = Astro.url.pathname as `/${string}`,
+  ogType = "website",
+  structuredData
+} = Astro.props;
 const homeHref = pathWithBase("/");
 const articlesHref = pathWithBase("/articles/");
+const searchHref = pathWithBase("/search/");
+const canonicalHref = absoluteUrl(path);
 ---
 
 <!doctype html>
@@ -17,8 +29,19 @@ const articlesHref = pathWithBase("/articles/");
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={canonicalHref} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalHref} />
     <title>{title}</title>
+    {
+      structuredData && (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+      )
+    }
   </head>
   <body>
     <div class="site-shell">
@@ -27,6 +50,7 @@ const articlesHref = pathWithBase("/articles/");
           <a class="site-title" href={homeHref}>Shared Article Catalogue</a>
           <nav class="site-nav" aria-label="Primary">
             <a href={articlesHref}>Articles</a>
+            <a href={searchHref}>Search</a>
           </nav>
         </div>
       </header>

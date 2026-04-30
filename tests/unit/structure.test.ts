@@ -55,6 +55,17 @@ describe("project structure", () => {
     expect(workflow).toContain("uses: actions/deploy-pages@v5");
   });
 
+  it("defines CI checks for pull requests without deploying Pages", () => {
+    const workflow = readFileSync(join(root, ".github/workflows/ci.yml"), "utf8");
+
+    expect(workflow).toContain("pull_request:");
+    expect(workflow).toContain('branches: ["master"]');
+    expect(workflow).toContain("node-version: 22");
+    expect(workflow).toContain("run: npm ci");
+    expect(workflow).toContain("run: npm run ci");
+    expect(workflow).not.toContain("deploy-pages");
+  });
+
   it("configures Astro for the repository GitHub Pages URL", () => {
     const config = readFileSync(join(root, "astro.config.mjs"), "utf8");
 

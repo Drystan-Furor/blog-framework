@@ -23,6 +23,10 @@ const { articles, pageNumber } = Astro.props;
 const page = paginateItems(articles, pageNumber, DEFAULT_PAGE_SIZE);
 ---
 
-<BaseLayout title={`Articles Page ${pageNumber} | Shared Article Catalogue`}>
+<BaseLayout
+  title={`Articles Page ${pageNumber} | Shared Article Catalogue`}
+  description={`Browse page ${pageNumber} of the shared article catalogue.`}
+  path={`/articles/page/${pageNumber}/`}
+>
   <ArticleIndex page={page} />
 </BaseLayout>

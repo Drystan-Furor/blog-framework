@@ -2,10 +2,10 @@
 title: "Test 2"
 subtitle: ""
 summary: "Write the first sentence. Write the second sentence. Write the third sentence."
-subject: "Uncategorized"
+subject: "Starter"
 publishedAt: "2026-04-30"
 image: "./image.svg"
-tags: [ ]
+tags: ["starter"]
 sourceUrl: "https://example.com/test-2"
 sharedAt: "2026-04-30"
 draft: false

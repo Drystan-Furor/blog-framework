@@ -31,3 +31,12 @@
 - Sprint 2 is scoped to making the catalogue browseable and deployable: previous/next links, related articles, static search index, search UI/ranking, tag/category browsing, SEO metadata, sitemap, RSS, CI, and GitHub Pages deployment validation.
 - Current implementation baseline noted in the refined output: Sprint 1 article spine exists, and GitHub Pages deployment already exists on `master`; SP-20 remains as validation/hardening so future work avoids duplicate workflow logic.
 - Remaining open decisions are intentionally tracked in the refined output: search index path and depth, related article count/UI, category versus subject taxonomy, canonical URL policy, sitemap tag indexing, RSS path/limit, CI workflow split, and default branch name.
+
+## 2026-04-30 - Sprint 2 Browseable Catalogue Implemented
+
+- Input executed from `backlog/refined/sprint2-R.md`.
+- Implementation branch: `codex/implement-sprint2`, branched from the active Sprint 2 refinement branch because the refined sprint file was the task input in the workspace.
+- Delivered article discovery helpers for public sorting, previous/next navigation, and related article ranking by tags, subject, recency, and slug.
+- Added static search: `dist/search-index.json`, `/search/` UI, title/tag/subject/summary/body ranking helpers, and base-aware result links for GitHub Pages.
+- Added tag and subject browse pages, SEO metadata/canonical/Open Graph/Article JSON-LD, generated `sitemap.xml`, generated `rss.xml`, and a pull-request CI workflow.
+- Verification completed: red unit tests failed first for missing Sprint 2 behavior; `npm run format:check`, `npm run ci`, and `GITHUB_PAGES=true npm run build` pass. The Pages-shaped build emits base-prefixed search links plus absolute sitemap/RSS URLs under `https://drystan-furor.github.io/blog-framework/`.

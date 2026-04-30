@@ -68,6 +68,27 @@ img {
   text-underline-offset: 0.22em;
 }
 
+.taxonomy-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.taxonomy-list a {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  color: var(--color-text);
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.42rem 0.6rem;
+  text-decoration: none;
+}
+
 .page-section {
   padding: clamp(2rem, 5vw, 4rem) 0;
 }
@@ -235,6 +256,106 @@ img {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.9em;
   padding: 0.1em 0.25em;
+}
+
+.article-footer {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.adjacent-articles {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.adjacent-articles a,
+.related-articles a,
+.search-result a {
+  color: var(--color-text);
+  font-weight: 800;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.22em;
+}
+
+.adjacent-articles a {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  min-width: 0;
+  padding: 0.9rem;
+}
+
+.related-articles {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: clamp(1rem, 2vw, 1.3rem);
+}
+
+.related-articles h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.8rem;
+}
+
+.related-articles ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.search-page {
+  max-width: 760px;
+}
+
+.search-field {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.search-field span {
+  color: var(--color-highlight);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.search-field input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  color: var(--color-text);
+  font: inherit;
+  padding: 0.85rem 1rem;
+  width: 100%;
+}
+
+.search-status {
+  color: var(--color-muted);
+  margin: 1rem 0 0;
+}
+
+.search-results {
+  display: grid;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.search-result {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1rem;
+}
+
+.search-result p {
+  color: var(--color-muted);
+  line-height: 1.55;
+  margin: 0.45rem 0 0;
 }
 
 .site-footer {

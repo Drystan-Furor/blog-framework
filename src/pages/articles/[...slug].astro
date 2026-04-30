@@ -6,13 +6,16 @@ import { createArticleRoutes } from "../../lib/routes";
 
 export async function getStaticPaths() {
   const articles = getPublicArticles(await getCollection("articles"));
-  return createArticleRoutes(articles);
+  return createArticleRoutes(articles).map((route) => ({
+    ...route,
+    props: { ...route.props, articles }
+  }));
 }
 
 const { article } = Astro.props;
 const { Content } = await render(article);
 ---
 
-<ArticleLayout article={article}>
+<ArticleLayout article={article} articles={Astro.props.articles}>
   <Content />
 </ArticleLayout>

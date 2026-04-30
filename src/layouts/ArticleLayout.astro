@@ -1,26 +1,69 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import { formatArticleDate, getArticleSlug, type ArticleEntry } from "../lib/articles";
+import {
+  formatArticleDate,
+  getAdjacentArticles,
+  getArticlePath,
+  getArticleSlug,
+  getArticleUrl,
+  getRelatedArticles,
+  type ArticleEntry
+} from "../lib/articles";
 import { getArticleImageUrl } from "../lib/article-images";
+import { absoluteUrl } from "../lib/site";
+import { slugifyTaxonomyValue, subjectUrlFromSlug, tagUrlFromSlug } from "../lib/taxonomy";
 
 type Props = {
   article: ArticleEntry;
+  articles: ArticleEntry[];
 };
 
-const { article } = Astro.props;
+const { article, articles } = Astro.props;
 const slug = getArticleSlug(article);
+const articlePath = getArticlePath(article);
 const imageUrl = getArticleImageUrl(slug, article.data.image);
+const adjacentArticles = getAdjacentArticles(articles, article);
+const relatedArticles = getRelatedArticles(article, articles);
+const subjectSlug = slugifyTaxonomyValue(article.data.subject);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.data.title,
+  description: article.data.summary,
+  datePublished: article.data.publishedAt.toISOString(),
+  url: absoluteUrl(articlePath),
+  image: imageUrl
+};
 ---
 
-<BaseLayout title={`${article.data.title} | Shared Article Catalogue`} description={article.data.summary}>
+<BaseLayout
+  title={`${article.data.title} | Shared Article Catalogue`}
+  description={article.data.summary}
+  path={articlePath}
+  ogType="article"
+  structuredData={structuredData}
+>
   <article class="page-section article-page">
     <header class="article-hero">
       <p class="article-hero__meta">
-        Subject: {article.data.subject} · {formatArticleDate(article.data.publishedAt)}
+        Subject: <a href={subjectUrlFromSlug(subjectSlug)}>{article.data.subject}</a> · {
+          formatArticleDate(article.data.publishedAt)
+        }
       </p>
       <h1>{article.data.title}</h1>
       {article.data.subtitle && <p class="article-hero__subtitle">{article.data.subtitle}</p>}
       <p class="article-hero__summary">{article.data.summary}</p>
+      {
+        article.data.tags.length > 0 && (
+          <ul class="taxonomy-list" aria-label="Article tags">
+            {article.data.tags.map((tag) => (
+              <li>
+                <a href={tagUrlFromSlug(slugifyTaxonomyValue(tag))}>{tag}</a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
       <img
         class="article-hero__image"
         src={imageUrl}
@@ -30,5 +73,41 @@ const imageUrl = getArticleImageUrl(slug, article.data.image);
     <div class="article-body">
       <slot />
     </div>
+    <footer class="article-footer">
+      <nav class="adjacent-articles" aria-label="Adjacent articles">
+        {
+          adjacentArticles.previous ? (
+            <a href={getArticleUrl(adjacentArticles.previous)}>
+              Newer: {adjacentArticles.previous.data.title}
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          adjacentArticles.next ? (
+            <a href={getArticleUrl(adjacentArticles.next)}>
+              Older: {adjacentArticles.next.data.title}
+            </a>
+          ) : (
+            <span />
+          )
+        }
+      </nav>
+      {
+        relatedArticles.length > 0 && (
+          <section class="related-articles" aria-label="Related articles">
+            <h2>Related Articles</h2>
+            <ul>
+              {relatedArticles.map((relatedArticle) => (
+                <li>
+                  <a href={getArticleUrl(relatedArticle)}>{relatedArticle.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </footer>
   </article>
 </BaseLayout>

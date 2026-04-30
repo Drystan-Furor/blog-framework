@@ -6,17 +6,23 @@ import Pagination from "./Pagination.astro";
 
 type Props = {
   page: PaginationPage<ArticleEntry>;
+  kicker?: string;
+  title?: string;
+  intro?: string;
 };
 
-const { page } = Astro.props;
+const {
+  page,
+  kicker = `${page.totalItems} saved article${page.totalItems === 1 ? "" : "s"}`,
+  title = "Shared Article Catalogue",
+  intro = "Articles worth keeping, arranged as static pages from Markdown source."
+} = Astro.props;
 ---
 
 <section class="page-section">
-  <p class="page-kicker">{page.totalItems} saved article{page.totalItems === 1 ? "" : "s"}</p>
-  <h1 class="page-title">Shared Article Catalogue</h1>
-  <p class="page-intro">
-    Articles worth keeping, arranged as static pages from Markdown source.
-  </p>
+  <p class="page-kicker">{kicker}</p>
+  <h1 class="page-title">{title}</h1>
+  <p class="page-intro">{intro}</p>
 
   <div class="article-grid" data-testid="article-grid">
     {page.items.map((article) => <ArticleCard article={article} />)}
