@@ -4,14 +4,15 @@
 
 Derived from `backlog/roadmap/roadmap.md`, which is derived from `base/essence.md`.
 
-Each story below includes WSJF scoring and spec-driven TDD delivery notes. Stories SP-01 through SP-30 are split into three sprints of 10 stories each.
+Each story below includes WSJF scoring and spec-driven TDD delivery notes. Stories SP-01 through SP-30 are split into
+three sprints of 10 stories each.
 
 ## Sprint Allocation
 
-| Sprint | Stories | Outcome |
-| --- | --- | --- |
+| Sprint   | Stories        | Outcome                                                                                 |
+|----------|----------------|-----------------------------------------------------------------------------------------|
 | Sprint 1 | SP-01 to SP-10 | Prove Astro structure, Markdown build, responsive browse slice, theme, and first tests. |
-| Sprint 2 | SP-11 to SP-20 | Add search, tags, navigation, SEO, CI, and GitHub Pages deploy. |
+| Sprint 2 | SP-11 to SP-20 | Add search, tags, navigation, SEO, CI, and GitHub Pages deploy.                         |
 | Sprint 3 | SP-21 to SP-30 | Harden images, accessibility, tests, starter workflow, onboarding, and merge readiness. |
 
 ## SP-01 - Astro Folder Structure and NPM Scripts
@@ -20,13 +21,17 @@ Backlog: PB-001
 Epic: E1
 WSJF: (BV 9 + TC 9 + RR 9) / Size 3 = 9.00
 
-User story: As a developer, I want a standard Astro single-repo folder structure and npm scripts, so contributors know where source, content, tests, config, scripts, and build artifacts belong.
+User story: As a developer, I want a standard Astro single-repo folder structure and npm scripts, so contributors know
+where source, content, tests, config, scripts, and build artifacts belong.
 
 Specs:
 
-- Given a fresh clone, when I inspect the repository, then I can identify source, content, assets, tests, scripts, docs, and GitHub workflow locations.
-- Given `package.json`, when I inspect scripts, then dev, check, build, preview, lint, format, unit test, e2e test, smoke test, CI, and article creation commands are documented or implemented.
-- Given the starter is duplicated, when I change site metadata and add Markdown, then the documented structure still applies.
+- Given a fresh clone, when I inspect the repository, then I can identify source, content, assets, tests, scripts, docs,
+  and GitHub workflow locations.
+- Given `package.json`, when I inspect scripts, then dev, check, build, preview, lint, format, unit test, e2e test,
+  smoke test, CI, and article creation commands are documented or implemented.
+- Given the starter is duplicated, when I change site metadata and add Markdown, then the documented structure still
+  applies.
 
 TDD delivery:
 
@@ -46,11 +51,13 @@ Backlog: PB-002
 Epic: E1
 WSJF: (BV 8 + TC 8 + RR 9) / Size 2 = 12.50
 
-User story: As a maintainer, I want a decision record selecting Astro over Vite-only, Webpack, and other options, so architecture choices are traceable.
+User story: As a maintainer, I want a decision record selecting Astro over Vite-only, Webpack, and other options, so
+architecture choices are traceable.
 
 Specs:
 
-- Given the decision record, when a maintainer reads it, then Astro is selected for content-first static output, Markdown support, low JavaScript, and GitHub Pages fit.
+- Given the decision record, when a maintainer reads it, then Astro is selected for content-first static output,
+  Markdown support, low JavaScript, and GitHub Pages fit.
 - Given alternatives, when Vite-only, Webpack, and other frameworks are listed, then each has a concise tradeoff.
 - Given future changes, when the decision is revisited, then acceptance criteria for replacing Astro are clear.
 
@@ -70,12 +77,14 @@ Backlog: PB-003
 Epic: E1
 WSJF: (BV 7 + TC 7 + RR 8) / Size 2 = 11.00
 
-User story: As a maintainer, I want a decision record selecting Astro components and vanilla JavaScript by default, so React or Vue is added only if the product needs it.
+User story: As a maintainer, I want a decision record selecting Astro components and vanilla JavaScript by default, so
+React or Vue is added only if the product needs it.
 
 Specs:
 
 - Given the decision record, when a developer reads it, then minimal vanilla JavaScript is the default.
-- Given richer interactions are needed, when future work evaluates React or Vue, then the criteria for adding a framework are explicit.
+- Given richer interactions are needed, when future work evaluates React or Vue, then the criteria for adding a
+  framework are explicit.
 - Given the static reading experience, when JavaScript is disabled, then core article reading remains supported.
 
 TDD delivery:
@@ -94,7 +103,8 @@ Backlog: PB-004
 Epic: E2
 WSJF: (BV 10 + TC 9 + RR 9) / Size 3 = 9.33
 
-User story: As a developer, I want a Hello World article rendered from Markdown, so the content pipeline is proven on day one.
+User story: As a developer, I want a Hello World article rendered from Markdown, so the content pipeline is proven on
+day one.
 
 Specs:
 
@@ -124,7 +134,8 @@ User story: As a developer, I want article frontmatter validated, so content mis
 Specs:
 
 - Given a valid article, when the content collection loads, then required fields are typed and available to pages.
-- Given a missing title, summary, subject, date, or image, when the build runs, then the build fails with a clear validation error.
+- Given a missing title, summary, subject, date, or image, when the build runs, then the build fails with a clear
+  validation error.
 - Given optional fields such as source URL or related tags, when omitted, then defaults remain predictable.
 
 TDD delivery:
@@ -144,13 +155,15 @@ Backlog: PB-006
 Epic: E2
 WSJF: (BV 10 + TC 8 + RR 8) / Size 4 = 6.50
 
-User story: As a site owner, I want each Markdown article folder to generate a static article route, so GitHub Pages can host the result.
+User story: As a site owner, I want each Markdown article folder to generate a static article route, so GitHub Pages can
+host the result.
 
 Specs:
 
 - Given multiple article folders, when the build runs, then each public article has a deterministic URL.
 - Given nested folder names, when URLs are generated, then slugs remain stable and URL-safe.
-- Given an article is marked draft, when production builds run, then the article is excluded if draft handling is enabled.
+- Given an article is marked draft, when production builds run, then the article is excluded if draft handling is
+  enabled.
 
 TDD delivery:
 
@@ -169,7 +182,8 @@ Backlog: PB-007
 Epic: E3
 WSJF: (BV 10 + TC 8 + RR 7) / Size 4 = 6.25
 
-User story: As a user, I want an article index grid with images, titles, and previews, so I can browse shared articles quickly.
+User story: As a user, I want an article index grid with images, titles, and previews, so I can browse shared articles
+quickly.
 
 Specs:
 
@@ -194,12 +208,14 @@ Backlog: PB-008
 Epic: E3
 WSJF: (BV 9 + TC 8 + RR 7) / Size 5 = 4.80
 
-User story: As a user, I want responsive grids and pagination, so browsing does not become overwhelming on desktop or mobile.
+User story: As a user, I want responsive grids and pagination, so browsing does not become overwhelming on desktop or
+mobile.
 
 Specs:
 
 - Given desktop width, when articles are listed, then the page shows a 4x3 grid with 12 articles per page.
-- Given mobile portrait width, when articles are listed, then the page shows 2 columns and supports up to 18 visible tiles before pagination.
+- Given mobile portrait width, when articles are listed, then the page shows 2 columns and supports up to 18 visible
+  tiles before pagination.
 - Given mobile landscape width, when articles are listed, then the page shows 3 columns.
 
 TDD delivery:
@@ -269,7 +285,8 @@ Backlog: PB-012
 Epic: E5
 WSJF: (BV 7 + TC 6 + RR 6) / Size 2 = 9.50
 
-User story: As a reader, I want previous and next article links, so I can move through the catalogue without returning to the index.
+User story: As a reader, I want previous and next article links, so I can move through the catalogue without returning
+to the index.
 
 Specs:
 
@@ -323,7 +340,8 @@ User story: As a user, I want a static search index generated during build, so s
 
 Specs:
 
-- Given article content, when the build runs, then a search index artifact contains title, summary, subject, tags, URL, and searchable body text.
+- Given article content, when the build runs, then a search index artifact contains title, summary, subject, tags, URL,
+  and searchable body text.
 - Given draft articles, when production build runs, then drafts are excluded.
 - Given 200+ articles, when the index is generated, then output stays small enough for client-side loading.
 
@@ -398,7 +416,8 @@ User story: As a new article, I want SEO fundamentals in the HTML, so pages are 
 
 Specs:
 
-- Given an article, when rendered, then meta title, description, canonical URL, robots, Open Graph tags, and schema.org Article JSON-LD are present.
+- Given an article, when rendered, then meta title, description, canonical URL, robots, Open Graph tags, and schema.org
+  Article JSON-LD are present.
 - Given missing optional social image data, when rendered, then a default image or safe omission is used.
 - Given a site base URL, when canonical links render, then they include the correct GitHub Pages base.
 
@@ -523,8 +542,10 @@ User story: As a user, I want optimized images and lazy loading, so browsing fee
 
 Specs:
 
-- Given article images, when cards and articles render, then images use optimized dimensions and lazy loading where appropriate.
-- Given AVIF/WebP support, when the browser loads images, then efficient formats are preferred with safe fallback behavior.
+- Given article images, when cards and articles render, then images use optimized dimensions and lazy loading where
+  appropriate.
+- Given AVIF/WebP support, when the browser loads images, then efficient formats are preferred with safe fallback
+  behavior.
 - Given missing image data, when a card renders, then layout remains stable.
 
 TDD delivery:
@@ -544,12 +565,14 @@ Backlog: PB-022
 Epic: E6
 WSJF: (BV 8 + TC 5 + RR 8) / Size 3 = 7.00
 
-User story: As a user, I want accessible pages with semantic HTML and keyboard navigation, so the site works for everyone.
+User story: As a user, I want accessible pages with semantic HTML and keyboard navigation, so the site works for
+everyone.
 
 Specs:
 
 - Given keyboard-only use, when browsing the index, then cards, pagination, search, and navigation are reachable.
-- Given article pages, when read by assistive technology or loaded without client JavaScript, then landmarks and headings are semantic and article content remains readable.
+- Given article pages, when read by assistive technology or loaded without client JavaScript, then landmarks and
+  headings are semantic and article content remains readable.
 - Given focus movement, when controls are activated, then focus indicators are visible.
 
 TDD delivery:
@@ -644,7 +667,8 @@ Backlog: PB-025
 Epic: E7
 WSJF: (BV 6 + TC 5 + RR 7) / Size 4 = 4.50
 
-User story: As a developer, I want component-level tests for key UI pieces, so behavior is validated without relying only on full e2e tests.
+User story: As a developer, I want component-level tests for key UI pieces, so behavior is validated without relying
+only on full e2e tests.
 
 Specs:
 
@@ -669,11 +693,13 @@ Backlog: PB-027
 Epic: E8
 WSJF: (BV 8 + TC 5 + RR 7) / Size 2 = 10.00
 
-User story: As a maintainer, I want a script that creates a new article from a template, so new Markdown entries are not copied from old articles.
+User story: As a maintainer, I want a script that creates a new article from a template, so new Markdown entries are not
+copied from old articles.
 
 Specs:
 
-- Given a slug, when `npm run new:article -- <slug>` runs, then a folder with `index.md` and placeholder image guidance is created.
+- Given a slug, when `npm run new:article -- <slug>` runs, then a folder with `index.md` and placeholder image guidance
+  is created.
 - Given an existing slug, when the script runs, then it refuses to overwrite content.
 - Given the template, when generated, then required fields are obvious and not filled with misleading old content.
 
@@ -700,7 +726,8 @@ Specs:
 
 - Given a new clone, when I read the README, then install, dev, test, build, preview, and deploy steps are clear.
 - Given a new article, when I follow README instructions, then I can create and validate it.
-- Given GitHub Pages deployment, when I follow README instructions, then I know where to set Pages source and site/base values.
+- Given GitHub Pages deployment, when I follow README instructions, then I know where to set Pages source and site/base
+  values.
 
 TDD delivery:
 
@@ -748,7 +775,8 @@ User story: As a maintainer, I want pull requests to require passing checks, so 
 
 Specs:
 
-- Given the repository uses GitHub, when branch protection is configured, then required checks include CI build and smoke tests.
+- Given the repository uses GitHub, when branch protection is configured, then required checks include CI build and
+  smoke tests.
 - Given a maintainer reads the docs, when they configure branch protection, then they know which checks to require.
 - Given checks fail, when a pull request is reviewed, then merge is blocked until fixed.
 
