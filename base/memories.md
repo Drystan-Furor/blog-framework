@@ -23,3 +23,11 @@
 - Added ADRs for framework and UI-library decisions in `docs/adr/0001-framework.md` and `docs/adr/0002-ui-library.md`.
 - Added Sprint 1 validation: 19 Vitest unit tests for structure, ADRs, content schema, routing, and pagination; 4 Playwright smoke tests for home, article navigation, responsive overflow, and shared theme tokens.
 - Verification completed: `npm run format:check`, `npm run ci`, and `npm audit --omit=dev` all pass. `npm run build` produces `dist/index.html`, `dist/articles/index.html`, and `dist/articles/hello-world/index.html`.
+
+## 2026-04-30 - Sprint 2 Refinement
+
+- Input read: `backlog/sprint/sprint2.md`.
+- Refined Sprint 2 output written to `backlog/refined/sprint2-R.md` with TDD-focused user stories, acceptance criteria, validations, story ordering, assumptions, validation matrix, and exit criteria.
+- Sprint 2 is scoped to making the catalogue browseable and deployable: previous/next links, related articles, static search index, search UI/ranking, tag/category browsing, SEO metadata, sitemap, RSS, CI, and GitHub Pages deployment validation.
+- Current implementation baseline noted in the refined output: Sprint 1 article spine exists, and GitHub Pages deployment already exists on `master`; SP-20 remains as validation/hardening so future work avoids duplicate workflow logic.
+- Remaining open decisions are intentionally tracked in the refined output: search index path and depth, related article count/UI, category versus subject taxonomy, canonical URL policy, sitemap tag indexing, RSS path/limit, CI workflow split, and default branch name.

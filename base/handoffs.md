@@ -57,3 +57,25 @@ Verification:
 - `npm audit --omit=dev`: passed with 0 production vulnerabilities.
 
 No blocker handoff is required. The remaining product refinement questions from `backlog/refined/sprint1-R.md` are still valid for later sprints, especially production GitHub Pages URL/base, exact tablet pagination behavior, and whether source URL/shared date become required catalogue metadata.
+
+## 2026-04-30 - Sprint 2 Refinement Completed
+
+Status: completed for the requested Sprint 2 refinement task.
+
+Completed outputs:
+
+- `backlog/sprint/sprint2.md`: read as the sprint input.
+- `base/memories.md`: read for project context and updated with the Sprint 2 refinement memory.
+- `base/handoffs.md`: updated with this completion summary.
+- `backlog/refined/sprint2-R.md`: written with TDD spec-driven user stories, acceptance criteria, validations, working assumptions, Sprint 1 baseline, story execution order, validation matrix, and exit criteria.
+- `tests/unit/refined-sprint2.test.ts`: added to verify the refined sprint artifact plus memory and handoff updates.
+
+Verification:
+
+- Targeted red test was run before the output existed and failed for the expected missing artifact/memory/handoff reasons.
+- `npm run test:unit -- refined-sprint2`: passed.
+- `npx prettier --check backlog/refined/sprint2-R.md base/memories.md base/handoffs.md tests/unit/refined-sprint2.test.ts`: passed.
+- `git diff --check`: passed.
+- `npm run ci`: passed.
+
+No blocker handoff is required. Remaining refinement questions are captured inside `backlog/refined/sprint2-R.md`, especially search depth, tag/category taxonomy, related article UI/count, canonical URL policy, RSS path/limit, CI workflow split, and default branch naming.
