@@ -17,6 +17,12 @@ test.describe("@smoke static article catalogue", () => {
         .filter({ hasText: "Yoga Voor Stofwisseling" })
         .getByAltText("afbeelding van een persoon die yoga doet.")
     ).toBeVisible();
+    await expect(
+      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
+    ).toContainText("Subject: Yoga");
+    await expect(
+      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
+    ).toContainText("Tags: yoga, gezondheid");
   });
 
   test("article card navigates to the static article page", async ({ page }) => {

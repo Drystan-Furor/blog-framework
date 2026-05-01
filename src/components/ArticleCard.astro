@@ -32,6 +32,10 @@ const image = card.image ? getArticleImage(slug, card.image.path) : null;
       <p class="article-card__meta">{card.publishedDate}</p>
       <h2 class="article-card__title">{card.title}</h2>
       <p class="article-card__summary">{card.summary}</p>
+      <div class="article-card__details" aria-label="Article metadata">
+        <p>Subject: {card.subject}</p>
+        {card.tags.length > 0 && <p>Tags: {card.tags.join(", ")}</p>}
+      </div>
     </div>
   </a>
 </article>
