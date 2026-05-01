@@ -74,7 +74,7 @@ npm run new:article -- article-slug
 ```
 
 ```bash
-npm run new:article -- schermtijd-en-gezin
+npm run new:article -- yoga-voor-stofwisseling
 ```
 
 Example:
