@@ -437,10 +437,17 @@ img {
   }
 
   .article-page {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .article-hero,
+  .article-body,
+  .article-footer {
+    margin-inline: auto;
+    width: min(100%, 72ch);
   }
 
   .article-body {
-    padding-top: 0.4rem;
+    padding-top: 0;
   }
 }

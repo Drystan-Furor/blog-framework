@@ -178,6 +178,57 @@ test.describe("@smoke static article catalogue", () => {
     }
   });
 
+  test("article body is centered on desktop without changing mobile column behavior", async ({
+    page
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("/articles/prompt-design/");
+
+    const desktopLayout = await page.evaluate(() => {
+      const pageSection = document.querySelector(".article-page")?.getBoundingClientRect();
+      const hero = document.querySelector(".article-hero")?.getBoundingClientRect();
+      const body = document.querySelector(".article-body")?.getBoundingClientRect();
+      if (!pageSection || !hero || !body) throw new Error("Article layout elements are missing");
+
+      return {
+        viewportCenter: window.innerWidth / 2,
+        pageCenter: pageSection.left + pageSection.width / 2,
+        bodyCenter: body.left + body.width / 2,
+        bodyTop: body.top,
+        heroBottom: hero.bottom
+      };
+    });
+
+    expect(Math.abs(desktopLayout.bodyCenter - desktopLayout.viewportCenter)).toBeLessThanOrEqual(
+      8
+    );
+    expect(Math.abs(desktopLayout.bodyCenter - desktopLayout.pageCenter)).toBeLessThanOrEqual(8);
+    expect(desktopLayout.bodyTop).toBeGreaterThan(desktopLayout.heroBottom);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/articles/prompt-design/");
+
+    const mobileLayout = await page.evaluate(() => {
+      const pageSection = document.querySelector(".article-page")?.getBoundingClientRect();
+      const hero = document.querySelector(".article-hero")?.getBoundingClientRect();
+      const body = document.querySelector(".article-body")?.getBoundingClientRect();
+      if (!pageSection || !hero || !body) throw new Error("Article layout elements are missing");
+
+      return {
+        pageLeft: pageSection.left,
+        pageRight: pageSection.right,
+        bodyLeft: body.left,
+        bodyRight: body.right,
+        bodyTop: body.top,
+        heroBottom: hero.bottom
+      };
+    });
+
+    expect(Math.abs(mobileLayout.bodyLeft - mobileLayout.pageLeft)).toBeLessThanOrEqual(1);
+    expect(Math.abs(mobileLayout.bodyRight - mobileLayout.pageRight)).toBeLessThanOrEqual(1);
+    expect(mobileLayout.bodyTop).toBeGreaterThan(mobileLayout.heroBottom);
+  });
+
   test("static 404 page keeps themed recovery links", async ({ page }) => {
     const response = await page.goto("/not-a-real-article/");
 
