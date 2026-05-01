@@ -58,8 +58,6 @@ spijsvertering. Hier zijn enkele voorbeelden:
 > Deze houding helpt bij het stimuleren van de spijsvertering en het
 > verminderen van gasvorming en opgeblazen gevoel.
 
-![img_1.png](img_1.png)
-
 ---
 
 - Als je denkt dat je last hebt van een trage stofwisseling, zijn er verschillende dingen die je kunt doen om je
