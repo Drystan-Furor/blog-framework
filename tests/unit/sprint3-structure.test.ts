@@ -59,6 +59,17 @@ describe("Sprint 3 hardening structure", () => {
     expect(docs).toContain("Deploy GitHub Pages");
   });
 
+  it("installs Playwright browsers before CI smoke tests run in GitHub Actions", () => {
+    const ciWorkflow = read(".github/workflows/ci.yml");
+    const installDependenciesIndex = ciWorkflow.indexOf("npm ci");
+    const installBrowsersIndex = ciWorkflow.indexOf("npx playwright install --with-deps chromium");
+    const runChecksIndex = ciWorkflow.indexOf("npm run ci");
+
+    expect(installDependenciesIndex).toBeGreaterThanOrEqual(0);
+    expect(installBrowsersIndex).toBeGreaterThan(installDependenciesIndex);
+    expect(runChecksIndex).toBeGreaterThan(installBrowsersIndex);
+  });
+
   it("adds a static 404 route", () => {
     expect(existsSync(join(root, "src/pages/404.astro"))).toBe(true);
   });
