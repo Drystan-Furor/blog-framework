@@ -76,6 +76,35 @@ test.describe("@smoke static article catalogue", () => {
     expect(structuredData).toContain("Hello World Shared Article");
   });
 
+  test("schermtijd article images keep their aspect ratio when scaled", async ({ page }) => {
+    await page.goto("/articles/schermtijd-en-gezin/");
+
+    for (const alt of ["img_1.png", "img_4.png"]) {
+      const image = page.getByAltText(alt);
+      await image.scrollIntoViewIfNeeded();
+      await expect(image).toBeVisible();
+
+      const dimensions = await image.evaluate(async (element: HTMLImageElement) => {
+        if (!element.complete) {
+          await new Promise<void>((resolve) => {
+            element.addEventListener("load", () => resolve(), { once: true });
+          });
+        }
+
+        const box = element.getBoundingClientRect();
+
+        return {
+          naturalRatio: element.naturalWidth / element.naturalHeight,
+          renderedRatio: box.width / box.height,
+          renderedWidth: box.width
+        };
+      });
+
+      expect(dimensions.renderedWidth).toBeGreaterThan(0);
+      expect(Math.abs(dimensions.renderedRatio - dimensions.naturalRatio)).toBeLessThan(0.01);
+    }
+  });
+
   test("responsive grids render without critical horizontal overflow", async ({ page }) => {
     for (const viewport of [
       { width: 1280, height: 900 },

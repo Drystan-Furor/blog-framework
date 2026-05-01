@@ -83,3 +83,6 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
 
 ## Agent Notes
+- 2026-05-01: `src/content/articles/schermtijd-en-gezin/index.md` has a malformed Markdown image near the
+  "laptop" section where `![img_3.png](img_3.png)` is embedded inside an external image URL. Treat that as a content
+  cleanup item separate from responsive image scaling.
