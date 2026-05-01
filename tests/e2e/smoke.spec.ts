@@ -4,7 +4,7 @@ test.describe("@smoke static article catalogue", () => {
   test("home page shows public article cards", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("heading", { name: "Shared Article Catalogue" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Yonify Artikel Catalogus" })).toBeVisible();
     await expect(
       page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
     ).toBeVisible();
@@ -39,7 +39,7 @@ test.describe("@smoke static article catalogue", () => {
     await page.goto("/articles/yoga-voor-stofwisseling/");
 
     await expect(page.getByRole("navigation", { name: "Adjacent articles" })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Older: Schermtijd En Gezin/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Older: Volkoren Pannekoeken/ })).toBeVisible();
   });
 
   test("search page ranks title matches and handles empty results", async ({ page }) => {
@@ -47,9 +47,7 @@ test.describe("@smoke static article catalogue", () => {
 
     const search = page.getByRole("searchbox", { name: "Search articles" });
     await search.fill("Yoga");
-    await expect(page.getByTestId("search-result").first()).toContainText(
-      "Yoga Voor Stofwisseling"
-    );
+    await expect(page.getByTestId("search-result").first()).toContainText("Yoga Basis");
 
     await search.fill("not-in-the-catalogue");
     await expect(page.getByTestId("search-empty")).toBeVisible();
@@ -171,7 +169,7 @@ test.describe("@smoke static article catalogue", () => {
         noScriptPage.getByRole("heading", { name: "Yoga Voor Stofwisseling" })
       ).toBeVisible();
       await expect(
-        noScriptPage.getByRole("link", { name: /Older: Schermtijd En Gezin/ })
+        noScriptPage.getByRole("link", { name: /Older: Volkoren Pannekoeken/ })
       ).toBeVisible();
       await expect(noScriptPage.getByRole("link", { name: "Articles" }).first()).toBeVisible();
     } finally {

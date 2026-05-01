@@ -13,7 +13,6 @@ sharedAt: "2026-05-01"
 draft: false
 ---
 
-
 # Yoga Oefeningen
 
 Er zijn een aantal yoga oefeningen die kunnen helpen bij het versterken van het immuunsysteem. Hieronder volgen een
@@ -25,41 +24,36 @@ aantal voorbeelden:
 > uitgevoerd als een vloeiende beweging. Zonnegroeten helpen om de bloedsomloop te verbeteren en de spijsvertering te
 > bevorderen, wat beide bijdraagt aan een sterk immuunsysteem.
 
-
 ## Diepe ademhalingsoefeningen (Pranayama)
 
 > Diepe ademhalingsoefeningen (Pranayama): Diepe ademhalingsoefeningen kunnen helpen om het lichaam te ontspannen en de
 > ademhaling te verdiepen. Dit helpt om de zuurstofvoorziening in het lichaam te verbeteren, wat weer bijdraagt aan een
 > sterker immuunsysteem.
 
-
 ## Warrior II (Virabhadrasana II)
 
 > Warrior II (Virabhadrasana II): Deze yogahouding helpt om de benen, rug en armen te versterken. Het helpt ook om de
 > longen te openen en de bloedsomloop te verbeteren, wat het immuunsysteem kan versterken.
-
 
 ## Cobra (Bhujangasana)
 
 > Cobra (Bhujangasana): De Cobra houding kan helpen om de longen en het hart te versterken. Het kan ook de bloedsomloop
 > verbeteren en het lymfestelsel stimuleren, wat bijdraagt aan een sterk immuunsysteem.
 
-
 ## Headstand (Sirsasana)
 
 > Headstand (Sirsasana): Deze omgekeerde houding kan helpen om de bloedsomloop te verbeteren en de spijsvertering te
 > stimuleren. Het kan ook de werking van de lymfeklieren verbeteren, wat weer bijdraagt aan een sterk immuunsysteem.
 
-
 Het is belangrijk om te onthouden dat het versterken van het immuunsysteem niet alleen afhangt van yoga oefeningen, maar
 ook van een gezonde levensstijl, zoals gezonde voeding, voldoende slaap en regelmatige lichaamsbeweging
 
-***
+---
 
 # De 12 yogahoudingen van de zonnegroet zijn:
 
 | Positie                               | Beschrijving                                                                               |
-|---------------------------------------|--------------------------------------------------------------------------------------------|
+| ------------------------------------- | ------------------------------------------------------------------------------------------ |
 | Tadasana (berg pose)                  | Staand rechtop met de voeten tegen elkaar aan.                                             |
 | Urdhva Hastasana (gestrekte armen)    | Strek de armen boven het hoofd en buig lichtjes achterover.                                |
 | Uttanasana (vooroverbuiging)          | Buig voorover en raak de grond aan met de handen.                                          |
@@ -73,7 +67,7 @@ ook van een gezonde levensstijl, zoals gezonde voeding, voldoende slaap en regel
 | Urdhva Hastasana (gestrekte armen)    | Strek de armen weer boven het hoofd.                                                       |
 | Tadasana (berg pose)                  | Eindig staand rechtop met de handpalmen tegen elkaar aan.                                  |
 
-***
+---
 
 ## welke stijl is de Hatha yoga?
 
@@ -90,7 +84,7 @@ Hatha yoga kan worden beschouwd als een zachte en toegankelijke yogavorm die ges
 gevorderden. Het is ook een populaire vorm van yoga voor mensen die op zoek zijn naar stressvermindering en een betere
 balans tussen lichaam en geest.
 
-***
+---
 
 ## welke stijl is de vinyasa yoga?
 
@@ -107,7 +101,7 @@ Vinyasa yoga biedt een fysieke en mentale uitdaging, omdat de houdingen snel en 
 helpen om de kracht en flexibiliteit te vergroten, terwijl het ook stressvermindering en een betere concentratie kan
 bevorderen. Vinyasa yoga is geschikt voor mensen die op zoek zijn naar een actieve en uitdagende yogavorm.
 
-***
+---
 
 ## welke stijl is de ashtanga yoga?
 
@@ -124,30 +118,33 @@ helpen om het lichaam te zuiveren en de geest te kalmeren. Ashtanga yoga is gesc
 een uitdagende en gestructureerde yogavorm. Het is echter niet geschikt voor beginners en mensen met blessures, omdat
 het een hoge mate van fysieke kracht en flexibiliteit vereist.
 
-***
+---
 
 ## Kundalini yoga, Yin yoga en Restorative yoga
+
 zijn allemaal verschillende yogastijlen met elk hun eigen kenmerken en
 voordelen. Hieronder vind je een korte beschrijving van elke stijl:
 
 ### Kundalini yoga:
+
 Kundalini yoga is een dynamische en spirituele vorm van yoga die zich richt op het ontwaken van de
 levensenergie die in ons lichaam aanwezig is. De lessen bestaan uit een combinatie van ademhalingsoefeningen, fysieke
 houdingen, meditatie en chanting. Kundalini yoga kan helpen om stress te verminderen, de concentratie te verbeteren en
 het bewustzijn te vergroten.
 
 ### Yin yoga:
+
 Yin yoga is een rustige en meditatieve vorm van yoga die zich richt op het stretchen van het bindweefsel en de
 gewrichten in ons lichaam. De houdingen worden langzaam en met aandacht uitgevoerd en worden vaak langer vastgehouden
 dan in andere yogastijlen. Yin yoga kan helpen om de flexibiliteit te vergroten, stress te verminderen en het lichaam en
 de geest te ontspannen.
 
 ### Restorative yoga:
+
 Restorative yoga is een zeer rustige en herstellende vorm van yoga die zich richt op diepe ontspanning
 en herstel van het lichaam en de geest. De houdingen worden langzaam en met ondersteuning uitgevoerd, zodat het lichaam
 volledig kan ontspannen en herstellen. Restorative yoga kan helpen om stress te verminderen, het immuunsysteem te
 versterken en het lichaam en de geest te ontspannen.
 
 > Het is belangrijk om te onthouden dat elke yogastijl unieke voordelen biedt en dat het kiezen van de juiste yogastijl
-afhankelijk is van je persoonlijke behoeften en doelen.
-
+> afhankelijk is van je persoonlijke behoeften en doelen.

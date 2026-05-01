@@ -16,15 +16,14 @@ draft: false
 
 ![img](https://kookidee.nl/wp-content/uploads/2017/10/volkoren-pannenkoeken-beetje-bloem.jpg)
 
-[Klik hier voor de originele pagina](https://kookidee.nl/recepten/avondeten/volkoren-pannenkoeken-met-een-klein-beetje-bloem/
-)
+[Klik hier voor de originele pagina](https://kookidee.nl/recepten/avondeten/volkoren-pannenkoeken-met-een-klein-beetje-bloem/)
 
 | Maaltijd     | Bereidingstijd | Aantal |
-|--------------|----------------|--------|
+| ------------ | -------------- | ------ |
 | Pannenkoeken | 25 minuten     | 12     |
 
 | Keukengerei      |
-|------------------|
+| ---------------- |
 | Mengkom          |
 | Garde            |
 | Handmixer        |
@@ -35,7 +34,7 @@ draft: false
 | Meer keukengerei |
 
 | Ingrediënten  | Hoeveelheid  |
-|---------------|--------------|
+| ------------- | ------------ |
 | Volkorenmeel  | 175 gr.      |
 | Bloem         | 75 gr.       |
 | Melk          | 650 ml.      |
@@ -44,7 +43,7 @@ draft: false
 | Zout          | 1/2 tl.      |
 | Boter of olie | om te bakken |
 
-***
+---
 
 ## Bereidingswijze
 

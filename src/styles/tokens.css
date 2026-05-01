@@ -3,9 +3,9 @@
   --color-background: #efc0cc;
   --color-surface: #f3c3c3;
   --color-text: #20262d;
-  --color-muted: #58636c;
+  --color-muted: #4b545c;
   --color-border: #f65f09;
-  --color-accent: #12f5f5;
+  --color-accent: #005f5f;
   --color-accent-contrast: #ffffff;
   --color-highlight: #a33d5f;
   --color-warm: #f2c14e;
@@ -20,7 +20,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: rgb(18 22 21 / 0, 87);
+    --color-background: #121615;
     --color-surface: #1d2321;
     --color-text: #e7e7be;
     --color-muted: #b5c0b8;
