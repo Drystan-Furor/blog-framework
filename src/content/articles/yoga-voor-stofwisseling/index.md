@@ -1,8 +1,8 @@
 ---
 title: "Yoga Voor Stofwisseling"
 subtitle: ""
-summary: "Er zijn verschillende yoga-oefeningen die kunnen helpen bij het stimuleren van de stofwisseling en het verbeteren van de
-spijsvertering. Hier zijn enkele voorbeelden: Kapalbhati Pranayama, Surya Namaskar - Zonnegroet, en anderen"
+summary: "Er zijn yoga-oefeningen die helpen bij het stimuleren van de stofwisseling en verbeteren van de
+spijsvertering. Welke zijn dat? "
 subject: "Yoga"
 publishedAt: "2026-05-01"
 image: "./img_1.png"

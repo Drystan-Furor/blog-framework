@@ -1,10 +1,9 @@
 ---
 title: "Schermtijd En Gezin"
 subtitle: ""
-summary: "Het scherm. Dat handige, glimmende ding dat altijd ping zegt op precies het verkeerde moment. We kunnen er van
-alles mee, behalve er spontaan gelukkiger van worden. En daarom wordt het tijd voor iets radicaals. Iets dat klinkt als
-een wellness-retreat maar dan zonder badjassen: één dag per week schermvrij."
-subject: "Schermtijd"
+summary: "Smartphones en andere schermen. We kunnen er van
+alles mee, behalve er spontaan gelukkiger van worden. Daarom is het tijd voor iets radicaals: één dag per week schermvrij. Waarom? Hoe?"
+subject: "Schermtijd en je gezin"
 publishedAt: "2025-11-22"
 image: "./img.png"
 imageAlt: "Family screen-time article illustration."
