@@ -1,14 +1,12 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const root = process.cwd();
-const articlePaths = [
-  "src/content/articles/hello-world/index.md",
-  "src/content/articles/prompt-design/index.md",
-  "src/content/articles/test-2/index.md",
-  "src/content/articles/schermtijd-en-gezin/index.md"
-];
+const articlesRoot = join(root, "src/content/articles");
+const articlePaths = readdirSync(articlesRoot, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => join("src/content/articles", entry.name, "index.md"));
 
 function frontmatter(path: string) {
   const markdown = readFileSync(join(root, path), "utf8");

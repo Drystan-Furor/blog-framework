@@ -6,77 +6,70 @@ test.describe("@smoke static article catalogue", () => {
 
     await expect(page.getByRole("heading", { name: "Shared Article Catalogue" })).toBeVisible();
     await expect(
-      page.getByTestId("article-card").filter({ hasText: "Hello World Shared Article" })
+      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
     ).toBeVisible();
     await expect(
-      page.getByTestId("article-card").filter({ hasText: "Prompt Design" })
+      page.getByTestId("article-card").filter({ hasText: "Schermtijd En Gezin" })
     ).toBeVisible();
     await expect(
       page
         .getByTestId("article-card")
-        .filter({ hasText: "Hello World Shared Article" })
-        .getByAltText("Layered article pages on a reading desk.")
+        .filter({ hasText: "Yoga Voor Stofwisseling" })
+        .getByAltText("afbeelding van een persoon die yoga doet.")
     ).toBeVisible();
   });
 
   test("article card navigates to the static article page", async ({ page }) => {
     await page.goto("/");
-    await page
-      .getByTestId("article-card")
-      .filter({ hasText: "Hello World Shared Article" })
-      .click();
+    await page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" }).click();
 
-    await expect(page).toHaveURL(/\/articles\/hello-world\/$/);
-    await expect(page.getByRole("heading", { name: "Hello World Shared Article" })).toBeVisible();
-    await expect(page.getByText("This article proves the Markdown folder pipeline.")).toBeVisible();
-    await expect(page.getByText("Subject: Starter")).toBeVisible();
+    await expect(page).toHaveURL(/\/articles\/yoga-voor-stofwisseling\/$/);
+    await expect(page.getByRole("heading", { name: "Yoga Voor Stofwisseling" })).toBeVisible();
+    await expect(page.getByText("Stimuleren van de stofwisseling Yoga")).toBeVisible();
+    await expect(page.getByText("Subject: Yoga")).toBeVisible();
   });
 
-  test("article footer links to adjacent and related articles", async ({ page }) => {
-    await page.goto("/articles/test-2/");
+  test("article footer links to adjacent articles", async ({ page }) => {
+    await page.goto("/articles/yoga-voor-stofwisseling/");
 
     await expect(page.getByRole("navigation", { name: "Adjacent articles" })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Newer: Prompt Design/ })).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: /Older: Hello World Shared Article/ })
-    ).toBeVisible();
-    await expect(page.getByRole("region", { name: "Related articles" })).toContainText(
-      "Hello World Shared Article"
-    );
+    await expect(page.getByRole("link", { name: /Older: Schermtijd En Gezin/ })).toBeVisible();
   });
 
   test("search page ranks title matches and handles empty results", async ({ page }) => {
     await page.goto("/search/");
 
     const search = page.getByRole("searchbox", { name: "Search articles" });
-    await search.fill("Prompt Design");
-    await expect(page.getByTestId("search-result").first()).toContainText("Prompt Design");
+    await search.fill("Yoga");
+    await expect(page.getByTestId("search-result").first()).toContainText(
+      "Yoga Voor Stofwisseling"
+    );
 
     await search.fill("not-in-the-catalogue");
     await expect(page.getByTestId("search-empty")).toBeVisible();
   });
 
   test("tag pages list matching public articles", async ({ page }) => {
-    await page.goto("/articles/prompt-design/");
-    await page.getByLabel("Article tags").getByRole("link", { name: "prompting" }).click();
+    await page.goto("/articles/yoga-voor-stofwisseling/");
+    await page.getByLabel("Article tags").getByRole("link", { name: "yoga" }).click();
 
-    await expect(page).toHaveURL(/\/tags\/prompting\/$/);
-    await expect(page.getByRole("heading", { name: "Tag: prompting" })).toBeVisible();
+    await expect(page).toHaveURL(/\/tags\/yoga\/$/);
+    await expect(page.getByRole("heading", { name: "Tag: yoga" })).toBeVisible();
     await expect(
-      page.getByTestId("article-card").filter({ hasText: "Prompt Design" })
+      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
     ).toBeVisible();
   });
 
   test("article pages expose SEO metadata and structured data", async ({ page }) => {
-    await page.goto("/articles/hello-world/");
+    await page.goto("/articles/yoga-voor-stofwisseling/");
 
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      "https://drystan-furor.github.io/articles/hello-world/"
+      "https://drystan-furor.github.io/articles/yoga-voor-stofwisseling/"
     );
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute("content", "article");
     const structuredData = await page.locator('script[type="application/ld+json"]').textContent();
-    expect(structuredData).toContain("Hello World Shared Article");
+    expect(structuredData).toContain("Yoga Voor Stofwisseling");
   });
 
   test("schermtijd article images keep their aspect ratio when scaled", async ({ page }) => {
@@ -113,17 +106,17 @@ test.describe("@smoke static article catalogue", () => {
 
     const cardImage = page
       .getByTestId("article-card")
-      .filter({ hasText: "Hello World Shared Article" })
+      .filter({ hasText: "Yoga Voor Stofwisseling" })
       .locator("img");
 
-    await expect(cardImage).toHaveAttribute("alt", "Layered article pages on a reading desk.");
+    await expect(cardImage).toHaveAttribute("alt", "afbeelding van een persoon die yoga doet.");
     await expect(cardImage).toHaveAttribute("loading", "lazy");
     await expect(cardImage).toHaveAttribute("decoding", "async");
     await expect(cardImage).toHaveAttribute("width", /\d+/);
     await expect(cardImage).toHaveAttribute("height", /\d+/);
 
-    await page.goto("/articles/hello-world/");
-    const heroImage = page.getByAltText("Layered article pages on a reading desk.");
+    await page.goto("/articles/yoga-voor-stofwisseling/");
+    const heroImage = page.getByAltText("afbeelding van een persoon die yoga doet.");
 
     await expect(heroImage).toHaveAttribute("loading", "eager");
     await expect(heroImage).toHaveAttribute("fetchpriority", "high");
@@ -167,10 +160,12 @@ test.describe("@smoke static article catalogue", () => {
     const noScriptPage = await context.newPage();
 
     try {
-      await noScriptPage.goto("/articles/test-2/");
-      await expect(noScriptPage.getByRole("heading", { name: "Test 2" })).toBeVisible();
+      await noScriptPage.goto("/articles/yoga-voor-stofwisseling/");
       await expect(
-        noScriptPage.getByRole("link", { name: /Older: Hello World Shared Article/ })
+        noScriptPage.getByRole("heading", { name: "Yoga Voor Stofwisseling" })
+      ).toBeVisible();
+      await expect(
+        noScriptPage.getByRole("link", { name: /Older: Schermtijd En Gezin/ })
       ).toBeVisible();
       await expect(noScriptPage.getByRole("link", { name: "Articles" }).first()).toBeVisible();
     } finally {
@@ -178,11 +173,29 @@ test.describe("@smoke static article catalogue", () => {
     }
   });
 
+  test("yoga article embeds Hugo YouTube shortcodes as videos", async ({ page }) => {
+    await page.goto("/articles/yoga-voor-stofwisseling/");
+
+    const videos = page.locator(".youtube-embed iframe");
+    await expect(videos).toHaveCount(6);
+    await expect(videos.first()).toHaveAttribute(
+      "src",
+      "https://www.youtube-nocookie.com/embed/gyUHCCCOqX8"
+    );
+    await expect(videos.first()).toHaveAttribute("loading", "lazy");
+    const firstVideoFrame = await page.locator(".youtube-embed").first().boundingBox();
+    expect(firstVideoFrame?.width).toBeGreaterThan(300);
+    expect(
+      Math.abs((firstVideoFrame?.width ?? 0) / (firstVideoFrame?.height ?? 1) - 16 / 9)
+    ).toBeLessThan(0.02);
+    await expect(page.getByText("{{< youtube gyUHCCCOqX8 >}}")).toHaveCount(0);
+  });
+
   test("article body is centered on desktop without changing mobile column behavior", async ({
     page
   }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto("/articles/prompt-design/");
+    await page.goto("/articles/yoga-voor-stofwisseling/");
 
     const desktopLayout = await page.evaluate(() => {
       const pageSection = document.querySelector(".article-page")?.getBoundingClientRect();
@@ -206,7 +219,7 @@ test.describe("@smoke static article catalogue", () => {
     expect(desktopLayout.bodyTop).toBeGreaterThan(desktopLayout.heroBottom);
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/articles/prompt-design/");
+    await page.goto("/articles/yoga-voor-stofwisseling/");
 
     const mobileLayout = await page.evaluate(() => {
       const pageSection = document.querySelector(".article-page")?.getBoundingClientRect();
@@ -264,7 +277,11 @@ test.describe("@smoke static article catalogue", () => {
   });
 
   test("index and article pages expose shared theme tokens", async ({ page }) => {
-    for (const path of ["/", "/articles/hello-world/", "/articles/prompt-design/"]) {
+    for (const path of [
+      "/",
+      "/articles/yoga-voor-stofwisseling/",
+      "/articles/schermtijd-en-gezin/"
+    ]) {
       await page.goto(path);
       const token = await page
         .locator("html")

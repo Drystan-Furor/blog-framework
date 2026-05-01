@@ -18,37 +18,41 @@ draft: false
 Er zijn verschillende yoga-oefeningen die kunnen helpen bij het stimuleren van de stofwisseling en het verbeteren van de
 spijsvertering. Hier zijn enkele voorbeelden:
 
-
 ## Kapalbhati Pranayama:
+
 {{< youtube gyUHCCCOqX8 >}}
+
 > Deze ademhalingsoefening helpt bij het verhogen van de zuurstoftoevoer naar het lichaam en
 > stimuleert de stofwisseling.
 
-
 ## Surya Namaskar - Zonnegroet:
+
 {{< youtube xyN9NWl86So >}}
+
 > Deze reeks van houdingen en bewegingen, gericht op de zon, helpt bij het verbeteren van de
 > bloedcirculatie en het verhogen van de stofwisseling.
 
-
 ## Navasana - Boot houding:
+
 {{< youtube QVEINjrYUPU >}}
+
 > Deze houding helpt bij het versterken van de buikspieren en de spijsvertering te verbeteren.
 
-
 ## Bhujangasana - Cobra houding:
+
 {{< youtube jCYpteTjgyw >}}
+
 > Deze houding helpt bij het strekken van de buik en het stimuleren van de spijsvertering.
 
-
 ## Dhanurasana - Booghouding:
+
 {{< youtube yUrsGfYRvpI >}}
 
 > Deze houding helpt bij het versterken van de rugspieren en het verbeteren van de
 > spijsvertering.
 
-
 ## Pavanamuktasana - Wind verlichtende houding:
+
 {{< youtube MxT0esXh3Eo >}}
 
 > Deze houding helpt bij het stimuleren van de spijsvertering en het
@@ -56,7 +60,7 @@ spijsvertering. Hier zijn enkele voorbeelden:
 
 ![img_1.png](img_1.png)
 
-***
+---
 
 - Als je denkt dat je last hebt van een trage stofwisseling, zijn er verschillende dingen die je kunt doen om je
   stofwisseling te verbeteren:
@@ -81,8 +85,7 @@ spijsvertering. Hier zijn enkele voorbeelden:
 
 - Overweeg krachttraining: Krachttraining kan helpen bij het opbouwen van spiermassa, wat de stofwisseling kan verbeteren.
 
-
-***
+---
 
 > Het is belangrijk om te onthouden dat elke yogastijl unieke voordelen biedt en dat het kiezen van de juiste yogastijl
 > afhankelijk is van je persoonlijke behoeften en doelen.
