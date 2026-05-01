@@ -40,3 +40,11 @@
 - Added static search: `dist/search-index.json`, `/search/` UI, title/tag/subject/summary/body ranking helpers, and base-aware result links for GitHub Pages.
 - Added tag and subject browse pages, SEO metadata/canonical/Open Graph/Article JSON-LD, generated `sitemap.xml`, generated `rss.xml`, and a pull-request CI workflow.
 - Verification completed: red unit tests failed first for missing Sprint 2 behavior; `npm run format:check`, `npm run ci`, and `GITHUB_PAGES=true npm run build` pass. The Pages-shaped build emits base-prefixed search links plus absolute sitemap/RSS URLs under `https://drystan-furor.github.io/blog-framework/`.
+
+## 2026-05-01 - Sprint 3 Refinement
+
+- Input read: `backlog/sprint/sprint3.md`.
+- Refined Sprint 3 output written to `backlog/refined/sprint3-R.md` with TDD-focused user stories, acceptance criteria, validations, working assumptions, Sprint 1 and Sprint 2 baseline, story ordering, validation matrix, and exit criteria.
+- Sprint 3 is scoped to hardening the starter: image optimization, semantic HTML and keyboard accessibility, contrast checks, lint/format hooks, expanded unit and component coverage, article creation workflow, README onboarding, static 404 handling, and merge-check guidance.
+- The `sprint1.md` wording in the task was treated as a typo because the ACT block explicitly named `backlog/sprint/sprint3.md` as input and `backlog/refined/sprint3-R.md` as output.
+- Remaining open decisions are intentionally tracked in the refined output: WCAG level, Husky default behavior, component test framework, protected branch name, image fallback policy, article template defaults, and merge queue guidance.
