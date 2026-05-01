@@ -9,6 +9,7 @@ const validArticle = {
   subject: "Starter",
   publishedAt: "2026-04-29",
   image: "./image.svg",
+  imageAlt: "Layered article pages on a reading desk.",
   sourceUrl: "https://example.com/hello-world",
   sharedAt: "2026-04-29"
 };
@@ -25,7 +26,7 @@ describe("article frontmatter schema", () => {
     expect(result.data.publishedAt).toBeInstanceOf(Date);
   });
 
-  it.each(["title", "summary", "subject", "publishedAt", "image"] as const)(
+  it.each(["title", "summary", "subject", "publishedAt", "image", "imageAlt"] as const)(
     "requires %s",
     (field) => {
       const article = { ...validArticle };

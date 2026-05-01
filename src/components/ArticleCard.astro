@@ -1,6 +1,7 @@
 ---
-import { formatArticleDate, getArticleSlug, getArticleUrl, type ArticleEntry } from "../lib/articles";
-import { getArticleImageUrl } from "../lib/article-images";
+import { getArticleSlug, type ArticleEntry } from "../lib/articles";
+import { getArticleImage } from "../lib/article-images";
+import { createArticleCardView } from "../lib/component-contracts";
 
 type Props = {
   article: ArticleEntry;
@@ -8,21 +9,29 @@ type Props = {
 
 const { article } = Astro.props;
 const slug = getArticleSlug(article);
-const imageUrl = getArticleImageUrl(slug, article.data.image);
+const card = createArticleCardView(article);
+const image = card.image ? getArticleImage(slug, card.image.path) : null;
 ---
 
 <article class="article-card" data-testid="article-card">
-  <a class="article-card__link" data-testid="article-card-link" href={getArticleUrl(article)}>
-    <img
-      class="article-card__image"
-      src={imageUrl}
-      alt={`Abstract reading desk for ${article.data.title}`}
-      loading="lazy"
-    />
+  <a class="article-card__link" data-testid="article-card-link" href={card.href}>
+    {
+      image && (
+        <img
+          class="article-card__image"
+          src={image.src}
+          alt={card.image?.alt}
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
     <div class="article-card__body">
-      <p class="article-card__meta">{formatArticleDate(article.data.publishedAt)}</p>
-      <h2 class="article-card__title">{article.data.title}</h2>
-      <p class="article-card__summary">{article.data.summary}</p>
+      <p class="article-card__meta">{card.publishedDate}</p>
+      <h2 class="article-card__title">{card.title}</h2>
+      <p class="article-card__summary">{card.summary}</p>
     </div>
   </a>
 </article>

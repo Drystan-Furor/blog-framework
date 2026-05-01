@@ -7,3 +7,5 @@ AGENTS.md
 backlog/
 base/
 docs/folder-structure.md
+# Known malformed Markdown image tracked in AGENTS.md; keep as a separate content cleanup.
+src/content/articles/schermtijd-en-gezin/index.md

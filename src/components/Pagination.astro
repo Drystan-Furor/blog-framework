@@ -1,6 +1,6 @@
 ---
 import type { PaginationPage } from "../lib/pagination";
-import { pathWithBase } from "../lib/routes";
+import { createPaginationView } from "../lib/component-contracts";
 
 type Props = {
   page: PaginationPage<unknown>;
@@ -8,29 +8,24 @@ type Props = {
 };
 
 const { page, basePath = "/articles" } = Astro.props;
-
-function pageHref(pageNumber: number) {
-  return pathWithBase(pageNumber === 1 ? `${basePath}/` : `${basePath}/page/${pageNumber}/`);
-}
+const pagination = createPaginationView(page, basePath);
 ---
 
 {
   page.totalPages > 1 && (
     <nav class="pagination" aria-label="Article pages">
       <div>
-        {page.hasPrevious && (
-          <a class="pagination__link" href={pageHref(page.previousPage ?? 1)}>
-            Previous
+        {pagination.previous && (
+          <a class="pagination__link" href={pagination.previous.href}>
+            {pagination.previous.label}
           </a>
         )}
       </div>
-      <span class="pagination__status">
-        Page {page.page} of {page.totalPages}
-      </span>
+      <span class="pagination__status">{pagination.label}</span>
       <div>
-        {page.hasNext && (
-          <a class="pagination__link" href={pageHref(page.nextPage ?? page.totalPages)}>
-            Next
+        {pagination.next && (
+          <a class="pagination__link" href={pagination.next.href}>
+            {pagination.next.label}
           </a>
         )}
       </div>

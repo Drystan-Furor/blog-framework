@@ -125,3 +125,29 @@ Verification:
 - `npm run ci`: passed.
 
 No blocker handoff is required. Remaining refinement questions are captured inside `backlog/refined/sprint3-R.md`, especially WCAG target level, Husky default behavior, component test framework, protected branch name, image fallback policy, article template defaults, and merge queue guidance.
+
+## 2026-05-01 - Sprint 3 Starter Hardening Completed
+
+Status: completed for the requested Sprint 3 implementation task.
+
+Completed outputs:
+
+- `src/lib/article-schema.ts`, `src/lib/articles.ts`, and article Markdown frontmatter: required `imageAlt` metadata for public article hero images.
+- `src/lib/article-images.ts`, `src/components/ArticleCard.astro`, and `src/layouts/ArticleLayout.astro`: image metadata lookup plus stable `width`, `height`, loading, decoding, and hero priority attributes.
+- `src/layouts/BaseLayout.astro`, `src/styles/global.css`, `src/styles/tokens.css`, and `src/pages/search/index.astro`: skip link, main landmark focus target, footer navigation, visible focus styles, contrast-safe tokens, and search loading/error states.
+- `src/lib/contrast.ts` and `src/lib/component-contracts.ts`: reusable validation and component-state contracts for Sprint 3 checks.
+- `.husky/pre-commit`, `.prettierignore`, `package.json`, `scripts/new-article.mjs`, `README.md`, `docs/merge-checks.md`, and `src/pages/404.astro`: optional hook smoke, CI format ordering, known malformed article exclusion, safer article scaffolding, onboarding, branch-protection guidance, and static 404 recovery.
+- `tests/unit/` and `tests/e2e/smoke.spec.ts`: expanded Sprint 3 coverage for content metadata, contrast, component states, hooks/docs, article creation, keyboard navigation, no-JavaScript reading, image metadata, and 404 behavior.
+
+Verification:
+
+- Sprint 3 red unit tests were run first and failed for the expected missing schema/docs/hook/404/contrast/component behavior.
+- `npm run test:unit`: passed with 57 tests.
+- `npm run test:e2e:smoke`: passed with 13 tests.
+- `npm run format:check`: passed.
+- `npm run hooks:check`: passed.
+- `git diff --check`: passed.
+- `npm run ci`: passed.
+- `GITHUB_PAGES=true npm run build`: passed and emitted `dist/404.html` plus base-prefixed static output.
+
+No blocker handoff is required. The known malformed Markdown image in `src/content/articles/schermtijd-en-gezin/index.md` remains a separate content cleanup item; it is excluded from Prettier until that content cleanup happens.

@@ -5,6 +5,7 @@ summary: "Prompt design starts with clear intent. It improves by making context 
 subject: "Prompting"
 publishedAt: "2026-04-30"
 image: "./image.svg"
+imageAlt: "Layered article pages on a reading desk."
 tags: ["prompting", "design"]
 sourceUrl: "https://example.com/prompt-design"
 sharedAt: "2026-04-30"

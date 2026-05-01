@@ -16,6 +16,7 @@ export const articleFrontmatterSchema = z.object({
       /^\.\/(?!.*\.\.)[A-Za-z0-9][A-Za-z0-9._/-]*\.(avif|webp|png|jpe?g|svg)$/i,
       "Use a colocated image path such as ./image.svg"
     ),
+  imageAlt: requiredText,
   tags: z.array(requiredText).default([]),
   sourceUrl: z.url().optional(),
   sharedBy: z.string().trim().min(1).default("wife"),

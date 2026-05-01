@@ -19,6 +19,7 @@ function article(overrides: {
       subject: overrides.subject ?? "General",
       publishedAt: new Date(overrides.publishedAt),
       image: "./image.svg",
+      imageAlt: "Article image alt text.",
       tags: overrides.tags ?? [],
       sourceUrl: "https://example.com",
       sharedBy: "wife",

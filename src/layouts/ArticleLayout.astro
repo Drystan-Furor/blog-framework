@@ -9,7 +9,7 @@ import {
   getRelatedArticles,
   type ArticleEntry
 } from "../lib/articles";
-import { getArticleImageUrl } from "../lib/article-images";
+import { getArticleImage } from "../lib/article-images";
 import { absoluteUrl } from "../lib/site";
 import { slugifyTaxonomyValue, subjectUrlFromSlug, tagUrlFromSlug } from "../lib/taxonomy";
 
@@ -21,7 +21,7 @@ type Props = {
 const { article, articles } = Astro.props;
 const slug = getArticleSlug(article);
 const articlePath = getArticlePath(article);
-const imageUrl = getArticleImageUrl(slug, article.data.image);
+const image = getArticleImage(slug, article.data.image);
 const adjacentArticles = getAdjacentArticles(articles, article);
 const relatedArticles = getRelatedArticles(article, articles);
 const subjectSlug = slugifyTaxonomyValue(article.data.subject);
@@ -32,7 +32,7 @@ const structuredData = {
   description: article.data.summary,
   datePublished: article.data.publishedAt.toISOString(),
   url: absoluteUrl(articlePath),
-  image: imageUrl
+  image: image.src
 };
 ---
 
@@ -66,8 +66,13 @@ const structuredData = {
       }
       <img
         class="article-hero__image"
-        src={imageUrl}
-        alt={`Abstract reading desk for ${article.data.title}`}
+        src={image.src}
+        alt={article.data.imageAlt}
+        width={image.width}
+        height={image.height}
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
       />
     </header>
     <div class="article-body">

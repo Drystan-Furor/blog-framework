@@ -7,6 +7,7 @@ een wellness-retreat maar dan zonder badjassen: één dag per week schermvrij."
 subject: "Schermtijd"
 publishedAt: "2025-11-22"
 image: "./img.png"
+imageAlt: "Family screen-time article illustration."
 tags: [life hacks, schermtijd]
 sourceUrl: "https://yonify-life.com/schermtijd-en-gezin"
 sharedAt: "2026-04-30"
@@ -188,4 +189,3 @@ natuur / fysieke omgeving hebben.
 
 
 ***
-

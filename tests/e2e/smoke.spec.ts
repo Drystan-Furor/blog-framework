@@ -12,7 +12,10 @@ test.describe("@smoke static article catalogue", () => {
       page.getByTestId("article-card").filter({ hasText: "Prompt Design" })
     ).toBeVisible();
     await expect(
-      page.getByAltText("Abstract reading desk for Hello World Shared Article")
+      page
+        .getByTestId("article-card")
+        .filter({ hasText: "Hello World Shared Article" })
+        .getByAltText("Layered article pages on a reading desk.")
     ).toBeVisible();
   });
 
@@ -103,6 +106,92 @@ test.describe("@smoke static article catalogue", () => {
       expect(dimensions.renderedWidth).toBeGreaterThan(0);
       expect(Math.abs(dimensions.renderedRatio - dimensions.naturalRatio)).toBeLessThan(0.01);
     }
+  });
+
+  test("article card and hero images expose stable loading metadata", async ({ page }) => {
+    await page.goto("/");
+
+    const cardImage = page
+      .getByTestId("article-card")
+      .filter({ hasText: "Hello World Shared Article" })
+      .locator("img");
+
+    await expect(cardImage).toHaveAttribute("alt", "Layered article pages on a reading desk.");
+    await expect(cardImage).toHaveAttribute("loading", "lazy");
+    await expect(cardImage).toHaveAttribute("decoding", "async");
+    await expect(cardImage).toHaveAttribute("width", /\d+/);
+    await expect(cardImage).toHaveAttribute("height", /\d+/);
+
+    await page.goto("/articles/hello-world/");
+    const heroImage = page.getByAltText("Layered article pages on a reading desk.");
+
+    await expect(heroImage).toHaveAttribute("loading", "eager");
+    await expect(heroImage).toHaveAttribute("fetchpriority", "high");
+    await expect(heroImage).toHaveAttribute("width", /\d+/);
+    await expect(heroImage).toHaveAttribute("height", /\d+/);
+  });
+
+  test("keyboard navigation exposes skip link, primary nav, search, and footer links", async ({
+    page
+  }) => {
+    await page.goto("/");
+
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name: "Shared Article Catalogue" })).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name: "Articles" }).first()).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name: "Search" }).first()).toBeFocused();
+
+    await page.goto("/");
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#main-content")).toBeFocused();
+
+    await page.goto("/search/");
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("searchbox", { name: "Search articles" })).toBeFocused();
+  });
+
+  test("article reading and footer navigation work without client JavaScript", async ({
+    browser,
+    baseURL
+  }) => {
+    const context = await browser.newContext({ baseURL, javaScriptEnabled: false });
+    const noScriptPage = await context.newPage();
+
+    try {
+      await noScriptPage.goto("/articles/test-2/");
+      await expect(noScriptPage.getByRole("heading", { name: "Test 2" })).toBeVisible();
+      await expect(
+        noScriptPage.getByRole("link", { name: /Older: Hello World Shared Article/ })
+      ).toBeVisible();
+      await expect(noScriptPage.getByRole("link", { name: "Articles" }).first()).toBeVisible();
+    } finally {
+      await context.close();
+    }
+  });
+
+  test("static 404 page keeps themed recovery links", async ({ page }) => {
+    const response = await page.goto("/not-a-real-article/");
+
+    expect(response?.status()).toBe(404);
+    await expect(page.getByRole("heading", { name: "Page Not Found" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Browse articles" })).toHaveAttribute(
+      "href",
+      "/articles/"
+    );
+    await expect(page.getByRole("link", { name: "Search catalogue" })).toHaveAttribute(
+      "href",
+      "/search/"
+    );
+    await expect(page.locator("html")).toHaveCSS("background-color", /rgb/);
   });
 
   test("responsive grids render without critical horizontal overflow", async ({ page }) => {

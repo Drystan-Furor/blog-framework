@@ -5,6 +5,7 @@ summary: "Write the first sentence. Write the second sentence. Write the third s
 subject: "Starter"
 publishedAt: "2026-04-30"
 image: "./image.svg"
+imageAlt: "Layered article pages on a reading desk."
 tags: ["starter"]
 sourceUrl: "https://example.com/test-2"
 sharedAt: "2026-04-30"

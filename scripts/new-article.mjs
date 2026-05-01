@@ -25,6 +25,7 @@ summary: "Write the first sentence. Write the second sentence. Write the third s
 subject: "Uncategorized"
 publishedAt: "${today}"
 image: "./image.svg"
+imageAlt: "TODO: Describe the article image."
 tags: []
 sourceUrl: "https://example.com/${slug}"
 sharedAt: "${today}"
@@ -52,9 +53,11 @@ export function createArticleImageSvg() {
 export async function createArticle(slug, cwd = process.cwd()) {
   assertValidSlug(slug);
 
+  const articlesDir = join(cwd, "src", "content", "articles");
   const articleDir = join(cwd, "src", "content", "articles", slug);
   const today = new Date().toISOString().slice(0, 10);
 
+  await mkdir(articlesDir, { recursive: true });
   await mkdir(articleDir, { recursive: false });
   await writeFile(join(articleDir, "index.md"), createArticleMarkdown(slug, today));
   await writeFile(join(articleDir, "image.svg"), createArticleImageSvg());

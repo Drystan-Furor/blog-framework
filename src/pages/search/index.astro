@@ -24,6 +24,12 @@ const searchIndexUrl = pathWithBase("/search-index.json");
     <p class="search-status" data-search-empty data-testid="search-empty" hidden>
       No matching articles.
     </p>
+    <p class="search-status" data-search-error data-testid="search-error" hidden>
+      Search is temporarily unavailable.
+    </p>
+    <noscript>
+      <p class="search-status">Search needs JavaScript, but all article and taxonomy links remain available.</p>
+    </noscript>
     <ol class="search-results" data-search-results></ol>
   </section>
 </BaseLayout>
@@ -36,6 +42,7 @@ const searchIndexUrl = pathWithBase("/search-index.json");
   const resultsList = app?.querySelector<HTMLElement>("[data-search-results]");
   const status = app?.querySelector<HTMLElement>("[data-search-status]");
   const empty = app?.querySelector<HTMLElement>("[data-search-empty]");
+  const error = app?.querySelector<HTMLElement>("[data-search-error]");
   let documents: import("../../lib/search").SearchDocument[] = [];
 
   function escapeHtml(value: string) {
@@ -52,7 +59,7 @@ const searchIndexUrl = pathWithBase("/search-index.json");
   }
 
   function render() {
-    if (!input || !resultsList || !status || !empty) return;
+    if (!input || !resultsList || !status || !empty || !error) return;
 
     const query = input.value;
     const results = searchDocuments(documents, query);
@@ -60,6 +67,7 @@ const searchIndexUrl = pathWithBase("/search-index.json");
 
     status.hidden = hasQuery;
     empty.hidden = !hasQuery || results.length > 0;
+    error.hidden = true;
     resultsList.innerHTML = results
       .map(
         (result) => `
@@ -73,15 +81,26 @@ const searchIndexUrl = pathWithBase("/search-index.json");
   }
 
   async function bootSearch() {
-    if (!app || !input) return;
+    if (!app || !input || !status || !empty || !error || !resultsList) return;
 
     const indexUrl = app.getAttribute("data-index-url");
     if (!indexUrl) return;
 
-    const response = await fetch(indexUrl);
-    documents = await response.json();
-    input.addEventListener("input", render);
-    render();
+    status.textContent = "Loading search index.";
+
+    try {
+      const response = await fetch(indexUrl);
+      if (!response.ok) throw new Error(`Search index request failed: ${response.status}`);
+
+      documents = await response.json();
+      input.addEventListener("input", render);
+      render();
+    } catch {
+      status.hidden = true;
+      empty.hidden = true;
+      error.hidden = false;
+      resultsList.innerHTML = "";
+    }
   }
 
   bootSearch();

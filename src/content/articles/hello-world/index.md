@@ -5,6 +5,7 @@ summary: "This catalogue starts with one article. It proves Markdown can become 
 subject: "Starter"
 publishedAt: "2026-04-29"
 image: "./image.svg"
+imageAlt: "Layered article pages on a reading desk."
 tags: ["starter"]
 sourceUrl: "https://example.com/hello-world"
 sharedAt: "2026-04-29"

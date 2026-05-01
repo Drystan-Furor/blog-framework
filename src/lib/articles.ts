@@ -13,6 +13,7 @@ export type ArticleRecord = {
     subject: string;
     publishedAt: Date;
     image: string;
+    imageAlt: string;
     tags?: string[];
     sourceUrl?: string;
     sharedBy?: string;

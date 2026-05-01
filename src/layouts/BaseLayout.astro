@@ -44,6 +44,7 @@ const canonicalHref = absoluteUrl(path);
     }
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
         <div class="site-header__inner">
@@ -54,11 +55,16 @@ const canonicalHref = absoluteUrl(path);
           </nav>
         </div>
       </header>
-      <main>
+      <main id="main-content" tabindex="-1">
         <slot />
       </main>
       <footer class="site-footer">
         <p>Static Markdown articles, built for GitHub Pages.</p>
+        <nav class="site-footer__nav" aria-label="Footer">
+          <a href={homeHref}>Home</a>
+          <a href={articlesHref}>Articles</a>
+          <a href={searchHref}>Search</a>
+        </nav>
       </footer>
     </div>
   </body>
