@@ -73,10 +73,6 @@ Create a starter folder with:
 npm run new:article -- article-slug
 ```
 
-```bash
-npm run new:article -- yoga-voor-stofwisseling
-```
-
 Example:
 
 ```bash
@@ -104,6 +100,10 @@ Then edit `index.md`:
 Use `draft: true` only when the article should be intentionally hidden from the index and static article routes.
 
 ## Build the Static Artifact
+
+```bash
+npm run new:article -- yoga-basis
+```
 
 Run:
 
