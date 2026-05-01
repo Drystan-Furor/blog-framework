@@ -35,7 +35,7 @@ and merge-check guidance.
 
 ## Working Assumptions
 
-- The request mentions `sprint1.md`, but the concrete ACT block names `backlog/sprint/sprint3.md` as input and
+- The request mentions `sprint3.md`, and the concrete ACT block names `backlog/sprint/sprint3.md` as input and
   `backlog/refined/sprint3-R.md` as output, so this refinement follows Sprint 3.
 - WCAG target defaults to AA unless the developer later chooses a stricter threshold.
 - Husky hooks are useful but optional for users duplicating the starter; CI commands remain the required source of
