@@ -7,7 +7,7 @@ subject: "Broodjes"
 publishedAt: "2025-05-02"
 image: "./img.png"
 imageAlt: "Afbeelding van een stapel lekker uitziende broodjes bestrooid met sesamzaadjes en belegd met tomaat en sla"
-tags: [recepten, koken, glutenvrij]
+tags: [ recepten, broodjes, glutenvrij ]
 sourceUrl: "https://example.com/glutenvrije-broodjes"
 sharedAt: "2025-05-02"
 draft: false
@@ -20,10 +20,8 @@ ze zijn voedzaam én ideaal als lunch of om te serveren op een borrelplank!
 
 - Glutenvrij en vegan!
 
-![Glutenvrije broodjes gemaakt van linzen](https://marikebol.com/wp-content/uploads/2023/04/Foto-19-04-2023-13-40-14-1160x680.jpg)
-
 | INGREDIËNTEN                                    | Hoeveelheid  |
-| ----------------------------------------------- | ------------ |
+|-------------------------------------------------|--------------|
 | Gedroogde rode linzen                           | 160 g        |
 | Water                                           | 50 ml        |
 | Olijfolie                                       | 2 el         |
@@ -55,7 +53,8 @@ ZO MAAK JE HET!
 
 NOTITIES
 
-> Bewaartip! De broodjes zijn het allerlekkerste wanneer ze net gebakken zijn. Wil je ze een dag later eten? Dan zou ik ze
+> Bewaartip! De broodjes zijn het allerlekkerste wanneer ze net gebakken zijn. Wil je ze een dag later eten? Dan zou ik
+> ze
 > nog even nat maken en opwarmen in de oven.
 
 > Variatietip! Geen linzen in huis maar wel gedroogde kikkererwten? Dan kun je dit recept even goed maken!
