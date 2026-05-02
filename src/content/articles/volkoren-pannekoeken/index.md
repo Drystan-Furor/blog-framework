@@ -6,7 +6,7 @@ subject: "Koken en recepten"
 publishedAt: "2026-04-01"
 image: "./image.png"
 imageAlt: "Een foto van een pannekoek"
-tags: [recepten, volkoren, pannekoeken]
+tags: [ recepten, volkoren, pannekoeken ]
 sourceUrl: "https://example.com/volkoren-pannekoeken"
 sharedAt: "2026-04-01"
 draft: false
@@ -19,22 +19,24 @@ draft: false
 [Klik hier voor de originele pagina](https://kookidee.nl/recepten/avondeten/volkoren-pannenkoeken-met-een-klein-beetje-bloem/)
 
 | Maaltijd     | Bereidingstijd | Aantal |
-| ------------ | -------------- | ------ |
+|--------------|----------------|--------|
 | Pannenkoeken | 25 minuten     | 12     |
 
-| Keukengerei      |
-| ---------------- |
-| Mengkom          |
-| Garde            |
+---
+
+| Keukengerei      | Pannen    |
+|------------------|-----------|
+| Mengkom          | Steelpan  |
+| Garde            | Koekenpan |
 | Handmixer        |
-| Steelpan         |
-| Koekenpan        |
 | Maatbeker        |
 | Keukenweegschaal |
 | Meer keukengerei |
 
+---
+
 | Ingrediënten  | Hoeveelheid  |
-| ------------- | ------------ |
+|---------------|--------------|
 | Volkorenmeel  | 175 gr.      |
 | Bloem         | 75 gr.       |
 | Melk          | 650 ml.      |
