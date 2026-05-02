@@ -151,3 +151,25 @@ Verification:
 - `GITHUB_PAGES=true npm run build`: passed and emitted `dist/404.html` plus base-prefixed static output.
 
 No blocker handoff is required. The known malformed Markdown image in `src/content/articles/schermtijd-en-gezin/index.md` remains a separate content cleanup item; it is excluded from Prettier until that content cleanup happens.
+
+## 2026-05-02 - Backlog Completion Split Completed
+
+Status: completed for the requested backlog filtering task.
+
+Completed outputs:
+
+- `backlog/refined/sprint1-R.md`: read as sprint proof input.
+- `backlog/refined/sprint2-R.md`: read as sprint proof input.
+- `backlog/refined/sprint3-R.md`: read as sprint proof input.
+- `base/memories.md`: read for proof of work and updated with this completion memory.
+- `base/handoffs.md`: updated with this completion summary.
+- `backlog/work-done.md`: created with PB-001 through PB-030 grouped by completed sprint and proof summary.
+- `backlog/backlog.md`: updated to keep only remaining work to be done, PB-031 through PB-041.
+
+Verification:
+
+- Confirmed Sprint 1, Sprint 2, and Sprint 3 implementation memories contain delivery and verification proof.
+- Confirmed active backlog no longer contains PB-001 through PB-030.
+- Confirmed completed sprint stories are represented in `backlog/work-done.md`.
+
+No blocker handoff is required.

@@ -57,3 +57,11 @@
 - The known malformed Markdown image in `src/content/articles/schermtijd-en-gezin/index.md` is excluded in `.prettierignore` so the new format gate can pass without performing unrelated content cleanup.
 - Added Sprint 3 validation: 57 Vitest unit tests across schema/content/contrast/component contracts/article creation/docs/workflows, and 13 Playwright smoke tests covering browsing, search, image stability, keyboard navigation, no-JavaScript reading, static 404 recovery, responsive overflow, and theme tokens.
 - Verification completed: `npm run format:check`, `npm run hooks:check`, `git diff --check`, `npm run ci`, and `GITHUB_PAGES=true npm run build` pass.
+
+## 2026-05-02 - Backlog Completion Split
+
+- Input read: `backlog/refined/sprint1-R.md`, `backlog/refined/sprint2-R.md`, `backlog/refined/sprint3-R.md`, and `base/memories.md`.
+- Used the Sprint 1, Sprint 2, and Sprint 3 implementation memories as proof of work for PB-001 through PB-030.
+- Moved proof-backed completed backlog items into `backlog/work-done.md`, grouped by sprint and linked to their sprint story IDs.
+- Updated `backlog/backlog.md` so it contains only remaining work to be done: PB-031 through PB-041.
+- No blocked work remains from this documentation split.
