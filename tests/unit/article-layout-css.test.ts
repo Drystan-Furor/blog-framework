@@ -6,6 +6,7 @@ const root = process.cwd();
 
 describe("article page layout CSS", () => {
   const css = readFileSync(join(root, "src/styles/global.css"), "utf8");
+  const tableBlock = css.match(/\.article-body\s+table\s*{(?<block>[\s\S]*?)}/)?.groups?.block;
 
   it("does not shift desktop article content into a two-column layout", () => {
     expect(css).not.toMatch(
@@ -23,8 +24,14 @@ describe("article page layout CSS", () => {
   });
 
   it("renders markdown tables as readable cards with a header banner", () => {
+    expect(tableBlock).toBeDefined();
     expect(css).toMatch(/\.article-body\s+table\s*{[\s\S]*border-radius:\s*var\(--radius-card\)/);
     expect(css).toMatch(/\.article-body\s+table\s*{[\s\S]*box-shadow:\s*var\(--shadow-card\)/);
+    expect(tableBlock).toMatch(/table-layout:\s*auto/);
+    expect(tableBlock).toMatch(/inline-size:\s*fit-content/);
+    expect(tableBlock).toMatch(/max-inline-size:\s*100%/);
+    expect(tableBlock).toMatch(/overflow-x:\s*auto/);
+    expect(tableBlock).not.toMatch(/(?:^|\n)\s*width:\s*100%/);
     expect(css).toMatch(/\.article-body\s+thead\s*{[\s\S]*background:/);
     expect(css).toMatch(/\.article-body\s+th\s*{[\s\S]*text-transform:\s*uppercase/);
     expect(css).toMatch(/\.article-body\s+tbody\s+tr:nth-child\(even\)\s*{[\s\S]*background:/);

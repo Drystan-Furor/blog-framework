@@ -4,8 +4,8 @@
   --color-surface: #dc6623;
   --color-text: #171c22;
   --color-muted: #4b545c;
-  --color-border: #12f5f5;
-  --color-accent: #f65f09;
+  --color-border: #007777;
+  --color-accent: #005f5f;
   --color-accent-contrast: #ffffff;
   --color-highlight: #a33d5f;
   --color-warm: #f2c14e;
@@ -24,8 +24,8 @@
     --color-surface: #012346;
     --color-text: #e7e7be;
     --color-muted: #b5c0b8;
-    --color-border: #12f5f5;
-    --color-accent: #dc6623;
+    --color-border: #dc6623;
+    --color-accent: #12f5f5;
     --color-accent-contrast: #0e1513;
     --color-highlight: #f09fbc;
     --color-warm: #e6c15d;

@@ -275,20 +275,24 @@ test.describe("@smoke static article catalogue", () => {
         const header = table.querySelector("thead");
         const headerStyle = header ? window.getComputedStyle(header) : null;
         const tableBox = table.getBoundingClientRect();
+        const bodyBox = table.closest(".article-body")?.getBoundingClientRect();
 
         return {
           borderRadius: tableStyle.borderRadius,
           boxShadow: tableStyle.boxShadow,
           headerBackground: headerStyle?.backgroundImage ?? "",
+          tableWidth: tableBox.width,
           tableRight: tableBox.right,
-          viewportWidth: window.innerWidth
+          bodyWidth: bodyBox?.width ?? 0,
+          bodyRight: bodyBox?.right ?? window.innerWidth
         };
       });
 
       expect(tableStyles.borderRadius).not.toBe("0px");
       expect(tableStyles.boxShadow).not.toBe("none");
       expect(tableStyles.headerBackground).not.toBe("none");
-      expect(tableStyles.tableRight).toBeLessThanOrEqual(tableStyles.viewportWidth + 1);
+      expect(tableStyles.tableRight).toBeLessThanOrEqual(tableStyles.bodyRight + 1);
+      expect(tableStyles.tableWidth).toBeLessThan(tableStyles.bodyWidth);
     }
   });
 

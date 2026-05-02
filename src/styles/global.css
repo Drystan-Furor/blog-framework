@@ -316,11 +316,12 @@ img {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.95rem;
+  inline-size: fit-content;
   line-height: 1.45;
   margin: 2rem 0;
-  max-width: 100%;
+  max-inline-size: 100%;
   overflow-x: auto;
-  width: 100%;
+  table-layout: auto;
 }
 
 .article-body thead {
@@ -334,10 +335,10 @@ img {
 
 .article-body th,
 .article-body td {
-  min-width: 9rem;
   padding: 0.8rem 0.95rem;
   text-align: left;
   vertical-align: top;
+  width: auto;
 }
 
 .article-body th {
