@@ -136,11 +136,11 @@ test.describe("@smoke static article catalogue", () => {
     await page.keyboard.press("Tab");
     await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
     await page.keyboard.press("Tab");
-    await expect(page.getByRole("link", { name: "Shared Article Catalogue" })).toBeFocused();
+    await expect(page.getByRole("link", { name: "Yonify Artikel catalogus" })).toBeFocused();
     await page.keyboard.press("Tab");
-    await expect(page.getByRole("link", { name: "Articles" }).first()).toBeFocused();
+    await expect(page.getByRole("link", { name: "Artikelen" }).first()).toBeFocused();
     await page.keyboard.press("Tab");
-    await expect(page.getByRole("link", { name: "Search" }).first()).toBeFocused();
+    await expect(page.getByRole("link", { name: "Zoek" }).first()).toBeFocused();
 
     await page.goto("/");
     await page.keyboard.press("Tab");
@@ -171,7 +171,7 @@ test.describe("@smoke static article catalogue", () => {
       await expect(
         noScriptPage.getByRole("link", { name: /Older: Volkoren Pannekoeken/ })
       ).toBeVisible();
-      await expect(noScriptPage.getByRole("link", { name: "Articles" }).first()).toBeVisible();
+      await expect(noScriptPage.getByRole("link", { name: "Artikelen" }).first()).toBeVisible();
     } finally {
       await context.close();
     }
@@ -244,6 +244,52 @@ test.describe("@smoke static article catalogue", () => {
     expect(Math.abs(mobileLayout.bodyLeft - mobileLayout.pageLeft)).toBeLessThanOrEqual(1);
     expect(Math.abs(mobileLayout.bodyRight - mobileLayout.pageRight)).toBeLessThanOrEqual(1);
     expect(mobileLayout.bodyTop).toBeGreaterThan(mobileLayout.heroBottom);
+  });
+
+  test("recipe markdown tables render as styled cards", async ({ page }) => {
+    for (const article of [
+      {
+        path: "/articles/glutenvrije-broodjes/",
+        headers: ["INGREDIËNTEN", "Hoeveelheid"],
+        minimumTables: 1
+      },
+      {
+        path: "/articles/volkoren-pannekoeken/",
+        headers: ["Maaltijd", "Bereidingstijd", "Aantal"],
+        minimumTables: 3
+      }
+    ]) {
+      await page.goto(article.path);
+
+      const tables = page.locator(".article-body table");
+      await expect(tables).toHaveCount(article.minimumTables);
+      const firstTable = tables.first();
+      await expect(firstTable).toBeVisible();
+
+      for (const header of article.headers) {
+        await expect(firstTable.getByRole("columnheader", { name: header })).toBeVisible();
+      }
+
+      const tableStyles = await firstTable.evaluate((table) => {
+        const tableStyle = window.getComputedStyle(table);
+        const header = table.querySelector("thead");
+        const headerStyle = header ? window.getComputedStyle(header) : null;
+        const tableBox = table.getBoundingClientRect();
+
+        return {
+          borderRadius: tableStyle.borderRadius,
+          boxShadow: tableStyle.boxShadow,
+          headerBackground: headerStyle?.backgroundImage ?? "",
+          tableRight: tableBox.right,
+          viewportWidth: window.innerWidth
+        };
+      });
+
+      expect(tableStyles.borderRadius).not.toBe("0px");
+      expect(tableStyles.boxShadow).not.toBe("none");
+      expect(tableStyles.headerBackground).not.toBe("none");
+      expect(tableStyles.tableRight).toBeLessThanOrEqual(tableStyles.viewportWidth + 1);
+    }
   });
 
   test("static 404 page keeps themed recovery links", async ({ page }) => {

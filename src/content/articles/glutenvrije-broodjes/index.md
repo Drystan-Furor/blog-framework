@@ -23,7 +23,7 @@ ze zijn voedzaam én ideaal als lunch of om te serveren op een borrelplank!
 ![Glutenvrije broodjes gemaakt van linzen](https://marikebol.com/wp-content/uploads/2023/04/Foto-19-04-2023-13-40-14-1160x680.jpg)
 
 | INGREDIËNTEN                                    | Hoeveelheid  |
-|-------------------------------------------------|--------------|
+| ----------------------------------------------- | ------------ |
 | Gedroogde rode linzen                           | 160 g        |
 | Water                                           | 50 ml        |
 | Olijfolie                                       | 2 el         |
@@ -33,7 +33,8 @@ ze zijn voedzaam én ideaal als lunch of om te serveren op een borrelplank!
 | Topping (sesamzaadjes, pompoenpitten, maanzaad) | -            |
 | Plantaardige melk of eigeel (optioneel)         | 2 el         |
 
-***
+---
+
 ZO MAAK JE HET!
 
 1. Spoel de gedroogde linzen goed af onder koud stromend water.
@@ -50,19 +51,15 @@ ZO MAAK JE HET!
     minuten gaar. Niet langer, dan worden de broodjes te compact is mijn ervaring.
 11. Beleg ze met jouw favoriete toppings én GENIET!
 
-***
+---
 
 NOTITIES
-> Bewaartip! De broodjes zijn het allerlekkerste wanneer ze net gebakken zijn. Wil je ze een dag later eten? Dan zou ik ze
-nog even nat maken en opwarmen in de oven.
 
+> Bewaartip! De broodjes zijn het allerlekkerste wanneer ze net gebakken zijn. Wil je ze een dag later eten? Dan zou ik ze
+> nog even nat maken en opwarmen in de oven.
 
 > Variatietip! Geen linzen in huis maar wel gedroogde kikkererwten? Dan kun je dit recept even goed maken!
 
-
 > Ook heel lekker met rozemarijn, tomaatjes en andere kruiden naar wens!
 
-
 > Dol op pizza? Bak er een pizzabodem van! Plaats de pizza 20 minuutjes in de oven i.p.v. 30 minuten.
-
-

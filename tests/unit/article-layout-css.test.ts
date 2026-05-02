@@ -21,4 +21,12 @@ describe("article page layout CSS", () => {
       /@media\s*\(min-width:\s*1120px\)\s*{[\s\S]*\.article-hero,\s*\.article-body,\s*\.article-footer\s*{[\s\S]*margin-inline:\s*auto;/
     );
   });
+
+  it("renders markdown tables as readable cards with a header banner", () => {
+    expect(css).toMatch(/\.article-body\s+table\s*{[\s\S]*border-radius:\s*var\(--radius-card\)/);
+    expect(css).toMatch(/\.article-body\s+table\s*{[\s\S]*box-shadow:\s*var\(--shadow-card\)/);
+    expect(css).toMatch(/\.article-body\s+thead\s*{[\s\S]*background:/);
+    expect(css).toMatch(/\.article-body\s+th\s*{[\s\S]*text-transform:\s*uppercase/);
+    expect(css).toMatch(/\.article-body\s+tbody\s+tr:nth-child\(even\)\s*{[\s\S]*background:/);
+  });
 });
