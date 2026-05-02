@@ -9,4 +9,4 @@ on article examples: src/content/articles/glutenvrije-broodjes/index.md | src/co
 
 ASSERT
 src/content/articles/glutenvrije-broodjes/index.md | src/content/articles/volkoren-pannekoeken/index.md once rendered trough pipeline shows formatted, styles tables in browser 
-fix/update failing tests and CI pipeline based on current changes
+fix/update failing tests and CI pipeline based on current changes, edited astro files is source of truth, validation has to pass on current generated files
