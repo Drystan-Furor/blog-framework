@@ -1,12 +1,13 @@
 GIVEN
-Intent = an article has images and images on browser are within aspect ratio and optionally scaled
+Intent = write articles by first example postief-denken
 
 DO
-create a method that automatically scales images
+example = src/content/articles/positief-denken-1/index.md
+refine = src/content/articles/positief-denken-2/index.md
 
 ACT
-on article example src/content/articles/schermtijd-en-gezin/index.md
+look at refered images in index and extract text from images, then copy said content into plain text with md formatting, just like postief-denken-1.md
 
 ASSERT
-src/content/articles/schermtijd-en-gezin/index.md shows in browser without stretched and distorted images
+src/content/articles/positief-denken-2/index.md is a text article, not just images
 
