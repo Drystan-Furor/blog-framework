@@ -1,9 +1,9 @@
 ---
 title: "Positief Denken 1"
-subtitle: ""
+subtitle: "Waarom denken we zo gemakkelijk negatief?"
 summary: "Wanneer je negatieve gedachten door positieve vervangt, zie je al snel positieve resultaten."
 subject: "Positief Denken"
-publishedAt: "2026-05-03"
+publishedAt: "2024-05-03"
 image: "./img.png"
 imageAlt: "Inspirerende tekst met de titel van het artikel."
 tags: [ kracht, gezondheid, positief denken ]
