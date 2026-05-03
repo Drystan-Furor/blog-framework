@@ -6,7 +6,7 @@ subject: "Positief Denken"
 publishedAt: "2024-05-03"
 image: "./img.png"
 imageAlt: "Inspirerende tekst met de titel van het artikel."
-tags: [ kracht, gezondheid, positief denken ]
+tags: [kracht, gezondheid, positief denken]
 sourceUrl: "https://example.com/positief-denken-1"
 sharedAt: "2026-05-03"
 draft: false
@@ -105,11 +105,11 @@ Stop met het volgen van nieuws. Heel simpel. Je hebt het niet nodig om te overle
 de hoogte blijven van de nieuwszaken op de wereld. Dan zijn er nog de volgende mogelijkheden:
 
 | Snel de koppen                                                                                                                                |
-|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Door alleen de koppen te lezen van de nieuwsberichten weet je in ieder geval wat er gebeurd is, maar ga je niet heel diep in op alle ellende. |
 
 | Lees het nieuws op een ander tijdstip |
-|---------------------------------------|
+| ------------------------------------- |
 
 Het eerste wat je 's morgens doet, zou iets positiefs moeten zijn. Een wandeling met je hond bijvoorbeeld. Of in je
 tuin staan en kijken naar de opkomende zon. Of gewoon genieten van een heerlijke douche of een kop koffie. Het nieuws,
@@ -118,7 +118,7 @@ binnenkomt. Tussen drukke werkzaamheden door bijvoorbeeld. Omdat je al snel weer
 groot dat het minder lang blijft hangen.
 
 | Eindig altijd met positief nieuws |
-|-----------------------------------|
+| --------------------------------- |
 
 Er zijn talloze websites die positief nieuws brengen, bijvoorbeeld de website goednieuws.nl. Probeer ten slotte in je
 achterhoofd te houden dat het nieuws altijd zo negatief mogeljk wordt gebracht om zo veel mogelijk lezers te trekken.  
@@ -127,7 +127,7 @@ dertig jaar. Ook komen er minder mensen om in corlogen en bij aanslagen. Het lik
 aandacht op wordt gevestigd.
 
 | Sociale media |
-|---------------|
+| ------------- |
 
 Het lijkt of iedereen mooier is, zich gelukkiger voelt en een spannender leven heeft dan jijzelf. En als je dan
 eens iets post komen er misschien maar weinig likes op. Leveren sociale media je meer stress op dan dat je er blij van
@@ -186,5 +186,3 @@ voelen over jezelf. Je kunt ze op elk moment van de dag zeggen: bij het opstaan,
 naar bed gaan. Als je voor het slapengaan een geleide meditatie doet, werken positieve affirmaties nóg beter!
 
 ![010.jpeg](010.jpeg)
-
-

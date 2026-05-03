@@ -21,7 +21,7 @@ ze zijn voedzaam én ideaal als lunch of om te serveren op een borrelplank!
 - Glutenvrij en vegan!
 
 | INGREDIËNTEN                                    | Hoeveelheid  |
-|-------------------------------------------------|--------------|
+| ----------------------------------------------- | ------------ |
 | Gedroogde rode linzen                           | 160 g        |
 | Water                                           | 50 ml        |
 | Olijfolie                                       | 2 el         |
