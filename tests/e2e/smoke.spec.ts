@@ -35,6 +35,35 @@ test.describe("@smoke static article catalogue", () => {
     await expect(page.getByText("Subject: Yoga")).toBeVisible();
   });
 
+  test("primary header stays sticky on home and article pages while scrolling", async ({ page }) => {
+    for (const path of ["/", "/articles/yoga-voor-stofwisseling/"]) {
+      await page.goto(path);
+
+      const header = page.locator(".site-header");
+      await expect(header).toHaveCSS("position", "sticky");
+      await expect(header.getByRole("link", { name: "Artikelen" })).toBeVisible();
+      await expect(header.getByRole("link", { name: "Zoek" })).toBeVisible();
+
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await page.waitForFunction(() => window.scrollY > 0);
+
+      const stickyState = await header.evaluate((element) => {
+        const box = element.getBoundingClientRect();
+
+        return {
+          bottom: box.bottom,
+          top: box.top
+        };
+      });
+
+      expect(stickyState.top).toBeGreaterThanOrEqual(0);
+      expect(stickyState.top).toBeLessThanOrEqual(1);
+      expect(stickyState.bottom).toBeGreaterThan(0);
+      await expect(header.getByRole("link", { name: "Artikelen" })).toBeVisible();
+      await expect(header.getByRole("link", { name: "Zoek" })).toBeVisible();
+    }
+  });
+
   test("article footer links to adjacent articles", async ({ page }) => {
     await page.goto("/articles/yoga-voor-stofwisseling/");
 
