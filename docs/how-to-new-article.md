@@ -102,7 +102,7 @@ Use `draft: true` only when the article should be intentionally hidden from the 
 ## Build the Static Artifact
 
 ```bash
-npm run new:article -- positief-denken-5
+npm run new:article -- positief-denken-7
 ```
 
 Run:
