@@ -35,7 +35,9 @@ test.describe("@smoke static article catalogue", () => {
     await expect(page.getByText("Subject: Yoga")).toBeVisible();
   });
 
-  test("primary header stays sticky on home and article pages while scrolling", async ({ page }) => {
+  test("primary header stays sticky on home and article pages while scrolling", async ({
+    page
+  }) => {
     for (const path of ["/", "/articles/yoga-voor-stofwisseling/"]) {
       await page.goto(path);
 
