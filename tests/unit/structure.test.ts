@@ -16,14 +16,13 @@ describe("project structure", () => {
       "src/lib",
       "tests",
       "scripts",
-      "docs",
-      ".github/workflows"
+      "docs"
     ];
 
     expect(requiredPaths.filter((path) => !existsSync(join(root, path)))).toEqual([]);
   });
 
-  it("defines the expected npm scripts", () => {
+  it("defines expected npm scripts", () => {
     const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
     const requiredScripts = [
       "dev",
@@ -43,33 +42,29 @@ describe("project structure", () => {
     expect(requiredScripts.filter((script) => !packageJson.scripts?.[script])).toEqual([]);
   });
 
-  it("defines a GitHub Pages workflow that deploys the built static site", () => {
-    const workflow = readFileSync(join(root, ".github/workflows/pages.yml"), "utf8");
+  it("defines Woodpecker checks and Codeberg Pages deployment", () => {
+    const workflow = readFileSync(join(root, ".woodpecker.yml"), "utf8");
 
-    expect(workflow).toContain('branches: ["master"]');
-    expect(workflow).toContain("pages: write");
-    expect(workflow).toContain("id-token: write");
-    expect(workflow).toContain("uses: withastro/action@v6");
-    expect(workflow).toContain("build-cmd: npm run build");
-    expect(workflow).toContain('GITHUB_PAGES: "true"');
-    expect(workflow).toContain("uses: actions/deploy-pages@v5");
+    expect(workflow).toContain("npm run ci");
+    expect(workflow).toContain("CODEBERG_PAGES=true npm run build");
+    expect(workflow).toContain("from_secret: codeberg_username");
+    expect(workflow).toContain("from_secret: codeberg_token");
+    expect(workflow).toContain("HEAD:pages --force");
+    expect(workflow).toContain("branch: master");
   });
 
-  it("defines CI checks for pull requests without deploying Pages", () => {
-    const workflow = readFileSync(join(root, ".github/workflows/ci.yml"), "utf8");
+  it("keeps deployment secrets out of pull request workflows", () => {
+    const workflow = readFileSync(join(root, ".woodpecker.yml"), "utf8");
 
-    expect(workflow).toContain("pull_request:");
-    expect(workflow).toContain('branches: ["master"]');
-    expect(workflow).toContain("node-version: 22");
-    expect(workflow).toContain("run: npm ci");
-    expect(workflow).toContain("run: npm run ci");
-    expect(workflow).not.toContain("deploy-pages");
+    expect(workflow).toContain("event: push");
+    expect(workflow).not.toContain("event: pull_request");
   });
 
-  it("configures Astro for the repository GitHub Pages URL", () => {
+  it("configures Astro for the repository Codeberg Pages URL", () => {
     const config = readFileSync(join(root, "astro.config.mjs"), "utf8");
 
-    expect(config).toContain('site: "https://drystan-furor.github.io"');
-    expect(config).toContain('base: isGitHubPagesBuild ? "/blog-framework" : "/"');
+    expect(config).toContain('site: "https://drystan-furor.codeberg.page"');
+    expect(config).toContain("base: repositoryBase");
+    expect(config).toContain('repositoryBase = isCodebergPagesBuild ? "/blog-framework" : "/"');
   });
 });

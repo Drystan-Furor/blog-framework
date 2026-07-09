@@ -28,8 +28,7 @@ Wil je de bouillon nog beter afstemmen op jouw smaak of voedingspatroon? Dan kun
 
 Na het zeven kun je de bouillon af laten koelen en verdelen over kleine bakjes of diepvrieszakjes. Zo heb je altijd een zelfgemaakte basis in huis voor een snelle soep of een ander gerecht. Een voorraadje in de vriezer bespaart tijd én zorgt ervoor dat je iedere maaltijd kunt verrijken met een natuurlijke, volle smaak.
 
-Een zelfgemaakte basisbouillon kost misschien wat tijd, maar het meeste werk doet de pan. Terwijl de bouillon rustig trekt, kun jij iets anders doen. De beloning is een heerlijke, pure basis waar je nog lang plezier van hebt.
----
+## Een zelfgemaakte basisbouillon kost misschien wat tijd, maar het meeste werk doet de pan. Terwijl de bouillon rustig trekt, kun jij iets anders doen. De beloning is een heerlijke, pure basis waar je nog lang plezier van hebt.
 
 ## Ingrediënten
 

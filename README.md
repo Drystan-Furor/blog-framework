@@ -1,7 +1,6 @@
 # Shared Article Catalogue
 
-A static Astro starter for cataloging articles shared by my wife. Markdown article folders become static HTML during the
-build pipeline, so the site can run on GitHub Pages without a server.
+A static Astro starter for cataloging articles shared by my wife. Markdown article folders become static HTML during the build pipeline, so the site can run on Codeberg Pages without a server.
 
 ## Requirements
 
@@ -24,8 +23,7 @@ The development server renders the same article source used by the static build.
 
 ## Article Content
 
-Articles live in `src/content/articles/<slug>/index.md` with colocated media files. The frontmatter schema requires a
-title, summary, subject, published date, hero image path, and image alt text.
+Articles live in `src/content/articles/<slug>/index.md` with colocated media files. Frontmatter schema requires title, summary, subject, published date, hero image path, and image alt text.
 
 Create a starter article folder with:
 
@@ -33,12 +31,11 @@ Create a starter article folder with:
 npm run new:article -- article-slug
 ```
 
-The command writes `src/content/articles/<slug>/index.md` and a colocated `image.svg` placeholder. Replace the TODO
-image alt text before publishing.
+The command writes `src/content/articles/<slug>/index.md` and a colocated `image.svg` placeholder. Replace TODO image alt text before publishing.
 
 ## Quality Gates
 
-Use these commands before opening a pull request:
+Use commands before opening a pull request:
 
 ```sh
 npm run format:check
@@ -58,16 +55,16 @@ CI remains the required source of truth for merges.
 
 ## Build And Preview
 
-Build the normal local static output:
+Build normal local static output:
 
 ```sh
 npm run build
 ```
 
-Build with the GitHub Pages base path:
+Build with the Codeberg Pages repository base path:
 
 ```sh
-GITHUB_PAGES=true npm run build
+CODEBERG_PAGES=true npm run build
 ```
 
 Preview the built site:
@@ -76,18 +73,25 @@ Preview the built site:
 npm run preview
 ```
 
-## GitHub Pages
+## Codeberg Pages
 
-The Pages workflow builds with `GITHUB_PAGES=true` so internal links and assets use `/blog-framework/`. Configure GitHub
-Pages to deploy from GitHub Actions.
+Woodpecker builds with `CODEBERG_PAGES=true` so internal links and assets use `/blog-framework/`, then publishes `dist/` to the repository branch `pages`.
 
-## Duplicate the starter
+Migration checklist from GitHub:
 
-When duplicating the starter, update:
+- Import or push this repository to `https://codeberg.org/drystan-furor/blog-framework`.
+- Enable the repository in Codeberg Woodpecker.
+- Add Woodpecker repository secrets `codeberg_username` and `codeberg_token`. The token needs repository write access.
+- In Codeberg repository settings, add a Forgejo webhook with target `https://drystan-furor.codeberg.page/blog-framework/` and branch filter `pages`.
+- Push to `master`; Woodpecker runs checks, rebuilds the site, and force-publishes the generated files to `pages`.
 
-- `astro.config.mjs` for the production site origin and repository base path.
-- `src/lib/site.ts` for the public site title, description, and origin.
-- `.github/workflows/*.yml` if the default branch is not `master`.
+## Duplicate Starter
+
+When duplicating starter, update:
+
+- `astro.config.mjs` production site origin and repository base path.
+- `src/lib/site.ts` the public site title, description, and origin.
+- `.woodpecker.yml` if the default branch is not `master`.
 - Article folders under `src/content/articles/`.
 
-See `docs/merge-checks.md` for protected branch and required check guidance.
+See `docs/merge-checks.md` protected branch required check guidance.
