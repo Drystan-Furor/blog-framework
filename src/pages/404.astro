@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { pathWithBase } from "../lib/routes";
+---
+
+<BaseLayout
+  title="Page Not Found | Shared Article Catalogue"
+  description="The requested catalogue page could not be found."
+  path="/404/"
+>
+  <section class="page-section search-page">
+    <p class="page-kicker">404</p>
+    <h1 class="page-title">Page Not Found</h1>
+    <p class="page-intro">
+      The article or catalogue page is not here. The saved articles and search page are still available.
+    </p>
+    <div class="page-actions" aria-label="Recovery links">
+      <a class="pagination__link" href={pathWithBase("/articles/")}>Browse articles</a>
+      <a class="pagination__link" href={pathWithBase("/search/")}>Search catalogue</a>
+    </div>
+  </section>
+</BaseLayout>

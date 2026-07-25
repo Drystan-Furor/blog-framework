@@ -1,0 +1,34 @@
+---
+import type { PaginationPage } from "../lib/pagination";
+import { createPaginationView } from "../lib/component-contracts";
+
+type Props = {
+  page: PaginationPage<unknown>;
+  basePath?: `/${string}`;
+};
+
+const { page, basePath = "/articles" } = Astro.props;
+const pagination = createPaginationView(page, basePath);
+---
+
+{
+  page.totalPages > 1 && (
+    <nav class="pagination" aria-label="Article pages">
+      <div>
+        {pagination.previous && (
+          <a class="pagination__link" href={pagination.previous.href}>
+            {pagination.previous.label}
+          </a>
+        )}
+      </div>
+      <span class="pagination__status">{pagination.label}</span>
+      <div>
+        {pagination.next && (
+          <a class="pagination__link" href={pagination.next.href}>
+            {pagination.next.label}
+          </a>
+        )}
+      </div>
+    </nav>
+  )
+}

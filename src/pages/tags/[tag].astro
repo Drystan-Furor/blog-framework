@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import ArticleIndex from "../../components/ArticleIndex.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { paginateItems } from "../../lib/pagination";
+import { getTagGroups } from "../../lib/taxonomy";
+
+export async function getStaticPaths() {
+  const groups = getTagGroups(await getCollection("articles"));
+
+  return groups.map((group) => ({
+    params: { tag: group.slug },
+    props: { group }
+  }));
+}
+
+const { group } = Astro.props;
+const page = paginateItems(group.articles, 1, group.articles.length || 1);
+---
+
+<BaseLayout
+  title={`Tag: ${group.label} | Shared Article Catalogue`}
+  description={`Browse shared articles tagged ${group.label}.`}
+  path={`/tags/${group.slug}/`}
+>
+  <ArticleIndex
+    page={page}
+    kicker={`${group.articles.length} tagged article${group.articles.length === 1 ? "" : "s"}`}
+    title={`Tag: ${group.label}`}
+    intro={`Articles connected by the ${group.label} tag.`}
+  />
+</BaseLayout>

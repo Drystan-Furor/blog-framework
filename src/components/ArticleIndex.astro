@@ -1,0 +1,32 @@
+---
+import type { PaginationPage } from "../lib/pagination";
+import type { ArticleEntry } from "../lib/articles";
+import ArticleCard from "./ArticleCard.astro";
+import Pagination from "./Pagination.astro";
+
+type Props = {
+  page: PaginationPage<ArticleEntry>;
+  kicker?: string;
+  title?: string;
+  intro?: string;
+};
+
+const {
+  page,
+  kicker = `${page.totalItems} bewaarde artikelen${page.totalItems === 1 ? "" : "s"}`,
+  title = "Yonify Artikel Catalogus",
+  intro = "Artikelen die aanvullend zijn in een gezonde levensstijl"
+} = Astro.props;
+---
+
+<section class="page-section">
+  <p class="page-kicker">{kicker}</p>
+  <h1 class="page-title">{title}</h1>
+  <p class="page-intro">{intro}</p>
+
+  <div class="article-grid" data-testid="article-grid">
+    {page.items.map((article) => <ArticleCard article={article} />)}
+  </div>
+
+  <Pagination page={page} />
+</section>
