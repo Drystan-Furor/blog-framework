@@ -134,12 +134,23 @@ test.describe("@smoke static article catalogue", () => {
     });
   });
 
-  test("article images preserve aspect ratio when scaled", async ({ page }) => {
+  test("article images follow their scaling contracts", async ({ page }) => {
     const article = await firstArticle(page);
     await page.goto(article.href);
-    const images = page.locator(".article-hero__image, .article-body img");
+
+    const hero = page.locator(".article-hero__image");
+    const heroStyle = await hero.evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      return {
+        objectFit: window.getComputedStyle(element).objectFit,
+        renderedRatio: box.width / box.height
+      };
+    });
+    expect(heroStyle.objectFit).toBe("cover");
+    expect(Math.abs(heroStyle.renderedRatio - 16 / 9)).toBeLessThan(0.01);
+
+    const images = page.locator(".article-body img");
     const count = await images.count();
-    expect(count).toBeGreaterThan(0);
 
     for (let index = 0; index < count; index += 1) {
       const image = images.nth(index);
