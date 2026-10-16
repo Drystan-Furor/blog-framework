@@ -6,7 +6,7 @@ subject: "bouillon"
 publishedAt: "2026-07-09"
 image: "./boullion.jpeg"
 imageAlt: "zelfgemaakte bouillon"
-tags: [ bouillon, recept, voeding, soep, zelfgemaakt ]
+tags: [bouillon, recept, voeding, soep, zelfgemaakt]
 sourceUrl: "https://example.com/zelfgemaakte-basisbouillon"
 sharedAt: "2026-07-09"
 draft: false
@@ -52,8 +52,8 @@ maar je kunt hem ook gebruiken voor stoofgerechten, sauzen, risotto of om groent
 porties in te vriezen heb je altijd een gezonde smaakmaker binnen handbereik.
 
 > Dit recept gebruikt eenvoudige ingrediënten zoals kip, wortel, kruiden en specerijen. Door de bouillon langzaam te laten
-trekken krijgen alle smaken de tijd om zich optimaal te ontwikkelen. Het resultaat is een heldere, rijke bouillon die
-zowel voedzaam als veelzijdig is.
+> trekken krijgen alle smaken de tijd om zich optimaal te ontwikkelen. Het resultaat is een heldere, rijke bouillon die
+> zowel voedzaam als veelzijdig is.
 
 Wil je de bouillon nog beter afstemmen op jouw smaak of voedingspatroon? Dan kun je eenvoudig variëren. Verdraag je
 bleekselderij niet goed, dan laat je deze gewoon weg. Ook kun je extra kruiden toevoegen, zoals tijm of een stukje prei,
