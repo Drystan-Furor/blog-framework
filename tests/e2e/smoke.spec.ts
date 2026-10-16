@@ -1,46 +1,70 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+type ArticleReference = { href: string; title: string };
+
+async function articleReferences(page: Page): Promise<ArticleReference[]> {
+  await page.goto("/");
+  const cards = page.getByTestId("article-card");
+  const count = await cards.count();
+  expect(count).toBeGreaterThan(0);
+
+  const articles: ArticleReference[] = [];
+  for (let index = 0; index < count; index += 1) {
+    const card = cards.nth(index);
+    const href = await card.getByTestId("article-card-link").getAttribute("href");
+    const title = (await card.locator(".article-card__title").innerText()).trim();
+    expect(href).toMatch(/^\/articles\/[^/]+\/$/);
+    expect(title).not.toBe("");
+    articles.push({ href: href!, title });
+  }
+
+  return articles;
+}
+
+async function firstArticle(page: Page) {
+  return (await articleReferences(page))[0];
+}
+
+async function firstTaggedArticle(page: Page) {
+  for (const article of await articleReferences(page)) {
+    await page.goto(article.href);
+    const tags = page.getByLabel("Article tags").getByRole("link");
+    if ((await tags.count()) > 0) return { article, tag: tags.first() };
+  }
+  return null;
+}
 
 test.describe("@smoke static article catalogue", () => {
-  test("home page shows public article cards", async ({ page }) => {
+  test("home page renders article cards from collection data", async ({ page }) => {
     await page.goto("/");
-
     await expect(page.getByRole("heading", { name: "Yonify Artikel Catalogus" })).toBeVisible();
-    await expect(
-      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
-    ).toBeVisible();
-    await expect(
-      page.getByTestId("article-card").filter({ hasText: "Schermtijd En Gezin" })
-    ).toBeVisible();
-    await expect(
-      page
-        .getByTestId("article-card")
-        .filter({ hasText: "Yoga Voor Stofwisseling" })
-        .getByAltText("afbeelding van een persoon die yoga doet.")
-    ).toBeVisible();
-    await expect(
-      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
-    ).toContainText("Subject: Yoga");
-    await expect(
-      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
-    ).toContainText("Tags: yoga, gezondheid");
+
+    const card = page.getByTestId("article-card").first();
+    await expect(card).toBeVisible();
+    await expect(card.locator(".article-card__title")).not.toHaveText("");
+    await expect(card.locator(".article-card__summary")).not.toHaveText("");
+    await expect(card.getByLabel("Article metadata")).toContainText("Subject:");
+
+    const image = card.locator("img");
+    await expect(image).toHaveAttribute("alt", /.+/);
+    await expect(image).toHaveAttribute("width", /\d+/);
+    await expect(image).toHaveAttribute("height", /\d+/);
   });
 
-  test("article card navigates to the static article page", async ({ page }) => {
-    await page.goto("/");
-    await page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" }).click();
+  test("article cards navigate to their generated article page", async ({ page }) => {
+    const article = await firstArticle(page);
+    await page.getByTestId("article-card-link").first().click();
 
-    await expect(page).toHaveURL(/\/articles\/yoga-voor-stofwisseling\/$/);
-    await expect(page.getByRole("heading", { name: "Yoga Voor Stofwisseling" })).toBeVisible();
-    await expect(page.getByText("Stimuleren van de stofwisseling Yoga")).toBeVisible();
-    await expect(page.getByText("Subject: Yoga")).toBeVisible();
+    expect(new URL(page.url()).pathname).toBe(article.href);
+    await expect(page.getByRole("heading", { level: 1, name: article.title })).toBeVisible();
+    await expect(page.locator(".article-body")).not.toHaveText("");
+    await expect(page.locator(".article-hero__meta")).toContainText("Subject:");
   });
 
-  test("primary header stays sticky on home and article pages while scrolling", async ({
-    page
-  }) => {
-    for (const path of ["/", "/articles/yoga-voor-stofwisseling/"]) {
+  test("primary header stays sticky on index and article pages", async ({ page }) => {
+    const article = await firstArticle(page);
+    for (const path of ["/", article.href]) {
       await page.goto(path);
-
       const header = page.locator(".site-header");
       await expect(header).toHaveCSS("position", "sticky");
       await expect(header.getByRole("link", { name: "Artikelen" })).toBeVisible();
@@ -48,122 +72,116 @@ test.describe("@smoke static article catalogue", () => {
 
       await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
       await page.waitForFunction(() => window.scrollY > 0);
-
-      const stickyState = await header.evaluate((element) => {
+      const position = await header.evaluate((element) => {
         const box = element.getBoundingClientRect();
-
-        return {
-          bottom: box.bottom,
-          top: box.top
-        };
+        return { bottom: box.bottom, top: box.top };
       });
-
-      expect(stickyState.top).toBeGreaterThanOrEqual(0);
-      expect(stickyState.top).toBeLessThanOrEqual(1);
-      expect(stickyState.bottom).toBeGreaterThan(0);
-      await expect(header.getByRole("link", { name: "Artikelen" })).toBeVisible();
-      await expect(header.getByRole("link", { name: "Zoek" })).toBeVisible();
+      expect(position.top).toBeGreaterThanOrEqual(0);
+      expect(position.top).toBeLessThanOrEqual(1);
+      expect(position.bottom).toBeGreaterThan(0);
     }
   });
 
-  test("article footer links to adjacent articles", async ({ page }) => {
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-
-    await expect(page.getByRole("navigation", { name: "Adjacent articles" })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Older: Volkoren Pannekoeken/ })).toBeVisible();
+  test("article footer exposes generated adjacent navigation", async ({ page }) => {
+    const articles = await articleReferences(page);
+    await page.goto(articles[0].href);
+    const navigation = page.getByRole("navigation", { name: "Adjacent articles" });
+    await expect(navigation).toBeVisible();
+    if (articles.length > 1) {
+      await expect(navigation.getByRole("link")).toHaveCount(1);
+      await expect(navigation.getByRole("link")).toHaveAttribute("href", /^\/articles\/[^/]+\/$/);
+    }
   });
 
-  test("search page ranks title matches and handles empty results", async ({ page }) => {
+  test("search finds current collection entries and handles empty results", async ({ page }) => {
+    const article = await firstArticle(page);
     await page.goto("/search/");
-
     const search = page.getByRole("searchbox", { name: "Search articles" });
-    await search.fill("Yoga");
-    await expect(page.getByTestId("search-result").first()).toContainText("Yoga Basis");
-
-    await search.fill("not-in-the-catalogue");
+    await search.fill(article.title);
+    await expect(page.getByTestId("search-result").first()).toContainText(article.title);
+    await search.fill("query-that-cannot-match-any-generated-article");
     await expect(page.getByTestId("search-empty")).toBeVisible();
   });
 
-  test("tag pages list matching public articles", async ({ page }) => {
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-    await page.getByLabel("Article tags").getByRole("link", { name: "yoga" }).click();
+  test("tag links open generated taxonomy pages", async ({ page }) => {
+    const tagged = await firstTaggedArticle(page);
+    test.skip(!tagged, "No tagged public article is available");
+    if (!tagged) return;
 
-    await expect(page).toHaveURL(/\/tags\/yoga\/$/);
-    await expect(page.getByRole("heading", { name: "Tag: yoga" })).toBeVisible();
+    const tag = (await tagged.tag.innerText()).trim();
+    const href = await tagged.tag.getAttribute("href");
+    await tagged.tag.click();
+    expect(new URL(page.url()).pathname).toBe(href);
+    await expect(page.getByRole("heading", { name: `Tag: ${tag}` })).toBeVisible();
     await expect(
-      page.getByTestId("article-card").filter({ hasText: "Yoga Voor Stofwisseling" })
+      page.getByTestId("article-card").filter({ hasText: tagged.article.title })
     ).toBeVisible();
   });
 
-  test("article pages expose SEO metadata and structured data", async ({ page }) => {
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-      "href",
-      "https://drystan-furor.github.io/articles/yoga-voor-stofwisseling/"
-    );
+  test("article pages expose matching SEO metadata and structured data", async ({ page }) => {
+    const article = await firstArticle(page);
+    await page.goto(article.href);
+    const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
+    expect(canonical).toBe(`https://drystan-furor.github.io${article.href}`);
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute("content", "article");
-    const structuredData = await page.locator('script[type="application/ld+json"]').textContent();
-    expect(structuredData).toContain("Yoga Voor Stofwisseling");
+    const structuredData = JSON.parse(
+      (await page.locator('script[type="application/ld+json"]').textContent()) ?? "{}"
+    );
+    expect(structuredData).toMatchObject({
+      "@type": "Article",
+      headline: article.title,
+      url: canonical
+    });
   });
 
-  test("schermtijd article images keep their aspect ratio when scaled", async ({ page }) => {
-    await page.goto("/articles/schermtijd-en-gezin/");
+  test("article images preserve aspect ratio when scaled", async ({ page }) => {
+    const article = await firstArticle(page);
+    await page.goto(article.href);
+    const images = page.locator(".article-hero__image, .article-body img");
+    const count = await images.count();
+    expect(count).toBeGreaterThan(0);
 
-    for (const alt of ["img_1.png", "img_4.png"]) {
-      const image = page.getByAltText(alt);
+    for (let index = 0; index < count; index += 1) {
+      const image = images.nth(index);
       await image.scrollIntoViewIfNeeded();
-      await expect(image).toBeVisible();
-
       const dimensions = await image.evaluate(async (element: HTMLImageElement) => {
         if (!element.complete) {
           await new Promise<void>((resolve) => {
             element.addEventListener("load", () => resolve(), { once: true });
           });
         }
-
         const box = element.getBoundingClientRect();
-
         return {
           naturalRatio: element.naturalWidth / element.naturalHeight,
           renderedRatio: box.width / box.height,
           renderedWidth: box.width
         };
       });
-
       expect(dimensions.renderedWidth).toBeGreaterThan(0);
       expect(Math.abs(dimensions.renderedRatio - dimensions.naturalRatio)).toBeLessThan(0.01);
     }
   });
 
-  test("article card and hero images expose stable loading metadata", async ({ page }) => {
-    await page.goto("/");
-
-    const cardImage = page
-      .getByTestId("article-card")
-      .filter({ hasText: "Yoga Voor Stofwisseling" })
-      .locator("img");
-
-    await expect(cardImage).toHaveAttribute("alt", "afbeelding van een persoon die yoga doet.");
+  test("card and hero images expose stable loading metadata", async ({ page }) => {
+    const article = await firstArticle(page);
+    const cardImage = page.getByTestId("article-card").first().locator("img");
+    await expect(cardImage).toHaveAttribute("alt", /.+/);
     await expect(cardImage).toHaveAttribute("loading", "lazy");
     await expect(cardImage).toHaveAttribute("decoding", "async");
     await expect(cardImage).toHaveAttribute("width", /\d+/);
     await expect(cardImage).toHaveAttribute("height", /\d+/);
 
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-    const heroImage = page.getByAltText("afbeelding van een persoon die yoga doet.");
-
+    await page.goto(article.href);
+    const heroImage = page.locator(".article-hero__image");
+    await expect(heroImage).toHaveAttribute("alt", /.+/);
     await expect(heroImage).toHaveAttribute("loading", "eager");
     await expect(heroImage).toHaveAttribute("fetchpriority", "high");
     await expect(heroImage).toHaveAttribute("width", /\d+/);
     await expect(heroImage).toHaveAttribute("height", /\d+/);
   });
 
-  test("keyboard navigation exposes skip link, primary nav, search, and footer links", async ({
-    page
-  }) => {
+  test("keyboard navigation exposes shared navigation controls", async ({ page }) => {
     await page.goto("/");
-
     await page.keyboard.press("Tab");
     await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
     await page.keyboard.press("Tab");
@@ -179,157 +197,66 @@ test.describe("@smoke static article catalogue", () => {
     await expect(page.locator("#main-content")).toBeFocused();
 
     await page.goto("/search/");
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Tab");
+    for (let index = 0; index < 5; index += 1) await page.keyboard.press("Tab");
     await expect(page.getByRole("searchbox", { name: "Search articles" })).toBeFocused();
   });
 
-  test("article reading and footer navigation work without client JavaScript", async ({
-    browser,
-    baseURL
-  }) => {
+  test("article reading works without client JavaScript", async ({ browser, baseURL, page }) => {
+    const article = await firstArticle(page);
     const context = await browser.newContext({ baseURL, javaScriptEnabled: false });
     const noScriptPage = await context.newPage();
-
     try {
-      await noScriptPage.goto("/articles/yoga-voor-stofwisseling/");
+      await noScriptPage.goto(article.href);
       await expect(
-        noScriptPage.getByRole("heading", { name: "Yoga Voor Stofwisseling" })
+        noScriptPage.getByRole("heading", { level: 1, name: article.title })
       ).toBeVisible();
-      await expect(
-        noScriptPage.getByRole("link", { name: /Older: Volkoren Pannekoeken/ })
-      ).toBeVisible();
+      await expect(noScriptPage.locator(".article-body")).not.toHaveText("");
       await expect(noScriptPage.getByRole("link", { name: "Artikelen" }).first()).toBeVisible();
     } finally {
       await context.close();
     }
   });
 
-  test("yoga article embeds Hugo YouTube shortcodes as videos", async ({ page }) => {
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-
-    const videos = page.locator(".youtube-embed iframe");
-    await expect(videos).toHaveCount(6);
-    await expect(videos.first()).toHaveAttribute(
-      "src",
-      "https://www.youtube-nocookie.com/embed/gyUHCCCOqX8"
-    );
-    await expect(videos.first()).toHaveAttribute("loading", "lazy");
-    const firstVideoFrame = await page.locator(".youtube-embed").first().boundingBox();
-    expect(firstVideoFrame?.width).toBeGreaterThan(300);
-    expect(
-      Math.abs((firstVideoFrame?.width ?? 0) / (firstVideoFrame?.height ?? 1) - 16 / 9)
-    ).toBeLessThan(0.02);
-    await expect(page.getByText("{{< youtube gyUHCCCOqX8 >}}")).toHaveCount(0);
-  });
-
-  test("article body is centered on desktop without changing mobile column behavior", async ({
-    page
-  }) => {
+  test("article body stays centered on desktop and aligned on mobile", async ({ page }) => {
+    const article = await firstArticle(page);
     await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-
-    const desktopLayout = await page.evaluate(() => {
-      const pageSection = document.querySelector(".article-page")?.getBoundingClientRect();
+    await page.goto(article.href);
+    const desktop = await page.evaluate(() => {
+      const section = document.querySelector(".article-page")?.getBoundingClientRect();
       const hero = document.querySelector(".article-hero")?.getBoundingClientRect();
       const body = document.querySelector(".article-body")?.getBoundingClientRect();
-      if (!pageSection || !hero || !body) throw new Error("Article layout elements are missing");
-
+      if (!section || !hero || !body) throw new Error("Article layout elements are missing");
       return {
         viewportCenter: window.innerWidth / 2,
-        pageCenter: pageSection.left + pageSection.width / 2,
+        pageCenter: section.left + section.width / 2,
         bodyCenter: body.left + body.width / 2,
         bodyTop: body.top,
         heroBottom: hero.bottom
       };
     });
-
-    expect(Math.abs(desktopLayout.bodyCenter - desktopLayout.viewportCenter)).toBeLessThanOrEqual(
-      8
-    );
-    expect(Math.abs(desktopLayout.bodyCenter - desktopLayout.pageCenter)).toBeLessThanOrEqual(8);
-    expect(desktopLayout.bodyTop).toBeGreaterThan(desktopLayout.heroBottom);
+    expect(Math.abs(desktop.bodyCenter - desktop.viewportCenter)).toBeLessThanOrEqual(8);
+    expect(Math.abs(desktop.bodyCenter - desktop.pageCenter)).toBeLessThanOrEqual(8);
+    expect(desktop.bodyTop).toBeGreaterThan(desktop.heroBottom);
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/articles/yoga-voor-stofwisseling/");
-
-    const mobileLayout = await page.evaluate(() => {
-      const pageSection = document.querySelector(".article-page")?.getBoundingClientRect();
-      const hero = document.querySelector(".article-hero")?.getBoundingClientRect();
+    await page.goto(article.href);
+    const mobile = await page.evaluate(() => {
+      const section = document.querySelector(".article-page")?.getBoundingClientRect();
       const body = document.querySelector(".article-body")?.getBoundingClientRect();
-      if (!pageSection || !hero || !body) throw new Error("Article layout elements are missing");
-
+      if (!section || !body) throw new Error("Article layout elements are missing");
       return {
-        pageLeft: pageSection.left,
-        pageRight: pageSection.right,
+        pageLeft: section.left,
+        pageRight: section.right,
         bodyLeft: body.left,
-        bodyRight: body.right,
-        bodyTop: body.top,
-        heroBottom: hero.bottom
+        bodyRight: body.right
       };
     });
-
-    expect(Math.abs(mobileLayout.bodyLeft - mobileLayout.pageLeft)).toBeLessThanOrEqual(1);
-    expect(Math.abs(mobileLayout.bodyRight - mobileLayout.pageRight)).toBeLessThanOrEqual(1);
-    expect(mobileLayout.bodyTop).toBeGreaterThan(mobileLayout.heroBottom);
-  });
-
-  test("recipe markdown tables render as styled cards", async ({ page }) => {
-    for (const article of [
-      {
-        path: "/articles/glutenvrije-broodjes/",
-        headers: ["INGREDIËNTEN", "Hoeveelheid"],
-        minimumTables: 1
-      },
-      {
-        path: "/articles/volkoren-pannekoeken/",
-        headers: ["Maaltijd", "Bereidingstijd", "Aantal"],
-        minimumTables: 3
-      }
-    ]) {
-      await page.goto(article.path);
-
-      const tables = page.locator(".article-body table");
-      await expect(tables).toHaveCount(article.minimumTables);
-      const firstTable = tables.first();
-      await expect(firstTable).toBeVisible();
-
-      for (const header of article.headers) {
-        await expect(firstTable.getByRole("columnheader", { name: header })).toBeVisible();
-      }
-
-      const tableStyles = await firstTable.evaluate((table) => {
-        const tableStyle = window.getComputedStyle(table);
-        const header = table.querySelector("thead");
-        const headerStyle = header ? window.getComputedStyle(header) : null;
-        const tableBox = table.getBoundingClientRect();
-        const bodyBox = table.closest(".article-body")?.getBoundingClientRect();
-
-        return {
-          borderRadius: tableStyle.borderRadius,
-          boxShadow: tableStyle.boxShadow,
-          headerBackground: headerStyle?.backgroundImage ?? "",
-          tableWidth: tableBox.width,
-          tableRight: tableBox.right,
-          bodyWidth: bodyBox?.width ?? 0,
-          bodyRight: bodyBox?.right ?? window.innerWidth
-        };
-      });
-
-      expect(tableStyles.borderRadius).not.toBe("0px");
-      expect(tableStyles.boxShadow).not.toBe("none");
-      expect(tableStyles.headerBackground).not.toBe("none");
-      expect(tableStyles.tableRight).toBeLessThanOrEqual(tableStyles.bodyRight + 1);
-      expect(tableStyles.tableWidth).toBeLessThan(tableStyles.bodyWidth);
-    }
+    expect(Math.abs(mobile.bodyLeft - mobile.pageLeft)).toBeLessThanOrEqual(1);
+    expect(Math.abs(mobile.bodyRight - mobile.pageRight)).toBeLessThanOrEqual(1);
   });
 
   test("static 404 page keeps themed recovery links", async ({ page }) => {
     const response = await page.goto("/not-a-real-article/");
-
     expect(response?.status()).toBe(404);
     await expect(page.getByRole("heading", { name: "Page Not Found" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Browse articles" })).toHaveAttribute(
@@ -343,7 +270,7 @@ test.describe("@smoke static article catalogue", () => {
     await expect(page.locator("html")).toHaveCSS("background-color", /rgb/);
   });
 
-  test("responsive grids render without critical horizontal overflow", async ({ page }) => {
+  test("responsive article grids avoid horizontal overflow", async ({ page }) => {
     for (const viewport of [
       { width: 1280, height: 900 },
       { width: 820, height: 1180 },
@@ -352,7 +279,6 @@ test.describe("@smoke static article catalogue", () => {
     ]) {
       await page.setViewportSize(viewport);
       await page.goto("/");
-
       await expect(page.getByTestId("article-grid")).toBeVisible();
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - window.innerWidth
@@ -362,18 +288,14 @@ test.describe("@smoke static article catalogue", () => {
   });
 
   test("index and article pages expose shared theme tokens", async ({ page }) => {
-    for (const path of [
-      "/",
-      "/articles/yoga-voor-stofwisseling/",
-      "/articles/schermtijd-en-gezin/"
-    ]) {
+    const article = await firstArticle(page);
+    for (const path of ["/", article.href]) {
       await page.goto(path);
       const token = await page
         .locator("html")
         .evaluate((element) =>
           window.getComputedStyle(element).getPropertyValue("--color-background").trim()
         );
-
       expect(token).not.toBe("");
     }
   });

@@ -18,6 +18,10 @@ describe("Sprint 3 hardening structure", () => {
     expect(ci.indexOf("npm run lint")).toBeGreaterThan(ci.indexOf("npm run format:check"));
   });
 
+  it("keeps article prose outside style-only formatting checks", () => {
+    expect(read(".prettierignore")).toContain("src/content/articles/**/*.md");
+  });
+
   it("documents and smoke-checks the optional local pre-commit hook", () => {
     const hook = read(".husky/pre-commit");
 
@@ -39,9 +43,9 @@ describe("Sprint 3 hardening structure", () => {
       "npm run test:unit",
       "npm run test:e2e:smoke",
       "npm run ci",
-      "CODEBERG_PAGES=true npm run build",
+      "GITHUB_PAGES=true npm run build",
       "npm run preview",
-      "Codeberg Pages",
+      "GitHub Pages",
       "Duplicate Starter"
     ]) {
       expect(readme).toContain(phrase);
@@ -50,23 +54,23 @@ describe("Sprint 3 hardening structure", () => {
 
   it("documents branch protection and exact merge check names", () => {
     const docs = read("docs/merge-checks.md");
-    const workflow = read(".woodpecker.yml");
+    const workflow = read(".github/workflows/pages.yml");
 
     expect(workflow).toContain("npm run ci");
-    expect(docs).toContain("Woodpecker / checks");
-    expect(docs).toContain("deploy-codeberg-pages");
+    expect(docs).toContain("Pages / quality");
+    expect(docs).toContain("Pages / deploy");
     expect(docs).toContain("master");
   });
 
-  it("runs CI before publishing Codeberg Pages", () => {
-    const workflow = read(".woodpecker.yml");
+  it("runs CI before publishing GitHub Pages", () => {
+    const workflow = read(".github/workflows/pages.yml");
     const checkIndex = workflow.indexOf("npm run ci");
-    const deployIndex = workflow.indexOf("deploy-codeberg-pages");
-    const buildIndex = workflow.indexOf("CODEBERG_PAGES=true npm run build");
+    const buildIndex = workflow.indexOf("GITHUB_PAGES=true npm run build");
+    const deployIndex = workflow.indexOf("actions/deploy-pages@v5");
 
     expect(checkIndex).toBeGreaterThanOrEqual(0);
-    expect(deployIndex).toBeGreaterThan(checkIndex);
-    expect(buildIndex).toBeGreaterThan(deployIndex);
+    expect(buildIndex).toBeGreaterThan(checkIndex);
+    expect(deployIndex).toBeGreaterThan(buildIndex);
   });
 
   it("adds a static 404 route", () => {

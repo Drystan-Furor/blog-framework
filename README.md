@@ -1,6 +1,6 @@
 # Shared Article Catalogue
 
-A static Astro starter for cataloging articles shared by my wife. Markdown article folders become static HTML during the build pipeline, so the site can run on Codeberg Pages without a server.
+A static Astro starter for cataloging articles shared by my wife. Markdown article folders become static HTML during the build pipeline, so the site can run on GitHub Pages without a server.
 
 ## Requirements
 
@@ -61,10 +61,10 @@ Build normal local static output:
 npm run build
 ```
 
-Build with the Codeberg Pages repository base path:
+Build with the GitHub Pages repository base path:
 
 ```sh
-CODEBERG_PAGES=true npm run build
+GITHUB_PAGES=true npm run build
 ```
 
 Preview the built site:
@@ -73,17 +73,16 @@ Preview the built site:
 npm run preview
 ```
 
-## Codeberg Pages
+## GitHub Pages
 
-Woodpecker builds with `CODEBERG_PAGES=true` so internal links and assets use `/blog-framework/`, then publishes `dist/` to the repository branch `pages`.
+The `Pages` GitHub Actions workflow checks pull requests and pushes to `master`. A successful `master` push rebuilds with `GITHUB_PAGES=true`, uploads `dist/` as a Pages artifact, and deploys it without committing generated files.
 
-Migration checklist from GitHub:
+One-time repository setup:
 
-- Import or push this repository to `https://codeberg.org/drystan-furor/blog-framework`.
-- Enable the repository in Codeberg Woodpecker.
-- Add Woodpecker repository secrets `codeberg_username` and `codeberg_token`. The token needs repository write access.
-- In Codeberg repository settings, add a Forgejo webhook with target `https://drystan-furor.codeberg.page/blog-framework/` and branch filter `pages`.
-- Push to `master`; Woodpecker runs checks, rebuilds the site, and force-publishes the generated files to `pages`.
+- Open repository Settings, then Pages.
+- Select GitHub Actions as the build and deployment source.
+- Protect `master` with the `Pages / quality` check.
+- Push to `master` and follow the `Pages` workflow in the Actions tab.
 
 ## Duplicate Starter
 
@@ -91,7 +90,7 @@ When duplicating starter, update:
 
 - `astro.config.mjs` production site origin and repository base path.
 - `src/lib/site.ts` the public site title, description, and origin.
-- `.woodpecker.yml` if the default branch is not `master`.
+- `.github/workflows/pages.yml` if the default branch is not `master`.
 - Article folders under `src/content/articles/`.
 
 See `docs/merge-checks.md` protected branch required check guidance.

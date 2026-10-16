@@ -42,29 +42,33 @@ describe("project structure", () => {
     expect(requiredScripts.filter((script) => !packageJson.scripts?.[script])).toEqual([]);
   });
 
-  it("defines Woodpecker checks and Codeberg Pages deployment", () => {
-    const workflow = readFileSync(join(root, ".woodpecker.yml"), "utf8");
+  it("defines GitHub checks and Pages deployment", () => {
+    const workflow = readFileSync(join(root, ".github/workflows/pages.yml"), "utf8");
 
     expect(workflow).toContain("npm run ci");
-    expect(workflow).toContain("CODEBERG_PAGES=true npm run build");
-    expect(workflow).toContain("from_secret: codeberg_username");
-    expect(workflow).toContain("from_secret: codeberg_token");
-    expect(workflow).toContain("HEAD:pages --force");
-    expect(workflow).toContain("branch: master");
+    expect(workflow).toContain("GITHUB_PAGES=true npm run build");
+    expect(workflow).toContain("actions/configure-pages@v6");
+    expect(workflow).toContain("actions/upload-pages-artifact@v5");
+    expect(workflow).toContain("actions/deploy-pages@v5");
+    expect(workflow).toContain("pages: write");
+    expect(workflow).toContain("id-token: write");
   });
 
-  it("keeps deployment secrets out of pull request workflows", () => {
-    const workflow = readFileSync(join(root, ".woodpecker.yml"), "utf8");
+  it("checks pull requests but deploys only pushes to master", () => {
+    const workflow = readFileSync(join(root, ".github/workflows/pages.yml"), "utf8");
 
-    expect(workflow).toContain("event: push");
-    expect(workflow).not.toContain("event: pull_request");
+    expect(workflow).toContain("pull_request:");
+    expect(workflow).toContain("push:");
+    expect(workflow).toContain("branches: [master]");
+    expect(workflow).toContain("github.event_name == 'push'");
+    expect(workflow).not.toContain("secrets.");
   });
 
-  it("configures Astro for the repository Codeberg Pages URL", () => {
+  it("configures Astro for the repository GitHub Pages URL", () => {
     const config = readFileSync(join(root, "astro.config.mjs"), "utf8");
 
-    expect(config).toContain('site: "https://drystan-furor.codeberg.page"');
+    expect(config).toContain('site: "https://drystan-furor.github.io"');
     expect(config).toContain("base: repositoryBase");
-    expect(config).toContain('repositoryBase = isCodebergPagesBuild ? "/blog-framework" : "/"');
+    expect(config).toContain('repositoryBase = isGitHubPagesBuild ? "/blog-framework" : "/"');
   });
 });

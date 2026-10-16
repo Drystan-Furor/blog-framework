@@ -1,13 +1,17 @@
-# Deploy naar Codeberg Pages
+# Deploy naar GitHub Pages
 
-De broncode staat op `master`. Een push naar `master` start Woodpecker CI; die
-bepaalt de statische output en publiceert uitsluitend die output naar `pages`.
-Push daarom **nooit** de broncode rechtstreeks naar `pages` en merge `master`
-normaal gesproken niet handmatig naar die branch.
+De broncode en artikelen staan op `master`. Een push naar `master` start de
+workflow in `.github/workflows/pages.yml`. GitHub Actions controleert de code,
+bouwt de statische site en publiceert het buildartifact naar GitHub Pages.
+Gegenereerde bestanden hoeven niet in een aparte branch te worden beheerd.
+
+## Eenmalige configuratie
+
+Open op GitHub `Settings`, daarna `Pages`, en kies `GitHub Actions` als bron.
+De workflow gebruikt alleen de ingebouwde `GITHUB_TOKEN`; extra secrets of
+externe CI-toegang zijn niet nodig.
 
 ## Standaarddeploy
-
-Voer vanuit de projectmap uit:
 
 ```sh
 git switch master
@@ -17,64 +21,25 @@ npm run ci
 git push origin master
 ```
 
-De push start de pipeline uit `.woodpecker.yml`. Open daarna de
-Woodpecker-pipeline voor `blog-framework` op Codeberg en wacht totdat zowel
-`checks` als `deploy-codeberg-pages` groen zijn.
+De workflow voert drie jobs op volgorde uit:
 
-## Handmatige deploy naar `pages`
+1. `quality` controleert opmaak, lint, Astro, unit tests, build en generieke E2E-tests.
+2. `build` bouwt `dist/` met de repositorybasis `/blog-framework/`.
+3. `deploy` publiceert het artifact naar GitHub Pages.
 
-Gebruik dit alleen wanneer de CI-deploy niet beschikbaar is. Deze procedure
-bewaart geen broncode op `pages`: zij bouwt vanaf de actuele `master` en
-vervangt `pages` volledig door de gegenereerde website.
+Pull requests voeren alleen `quality` uit. Alleen een push naar `master` of een
+handmatige workflowstart kan publiceren.
 
-Voer vanuit de projectmap uit. De Git-identiteit moet vooraf lokaal zijn
-ingesteld, bijvoorbeeld met `git config --global user.name` en
-`git config --global user.email`.
+## Controle
 
-```sh
-git switch master
-git pull --ff-only origin master
-npm ci
-CODEBERG_PAGES=true npm run build
+Controleer de workflow in de GitHub Actions-tab. Na een groene `deploy` job is
+de site beschikbaar op:
 
-PAGES_DIR="$(mktemp -d)"
-PAGES_REMOTE="$(git remote get-url origin)"
-git clone --branch pages --depth 1 "$PAGES_REMOTE" "$PAGES_DIR"
-git -C "$PAGES_DIR" checkout --orphan pages-build
-find "$PAGES_DIR" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-cp -a dist/. "$PAGES_DIR"/
-git -C "$PAGES_DIR" add --all
-git -C "$PAGES_DIR" commit -m "Deploy site from $(git rev-parse --short HEAD)"
-git -C "$PAGES_DIR" push origin HEAD:pages --force
-rm -rf "$PAGES_DIR"
+```text
+https://drystan-furor.github.io/blog-framework/
 ```
 
-`--force` is noodzakelijk: elke deploy vervangt de volledige, gegenereerde
-inhoud van `pages`. Controleer vóór de push dat je op `master` staat en dat de
-build succesvol is afgerond. De onderstaande terminalcontrole bevestigt daarna
-dat de remote branch is bijgewerkt.
+## Herstel
 
-## Controle vanuit de terminal
-
-Na een succesvolle pipeline moet `pages` een nieuwere commit hebben:
-
-```sh
-git fetch origin pages
-git log -1 --oneline origin/master
-git log -1 --oneline origin/pages
-git ls-remote origin refs/heads/pages
-```
-
-## Eenmalige uitzondering: histories samenvoegen
-
-`pages` was oorspronkelijk een onafhankelijke, gegenereerde branch. Als een
-historische merge van `master` naar `pages` expliciet nodig is, is dit het
-commando:
-
-```sh
-git switch pages
-git merge master --allow-unrelated-histories
-```
-
-Push deze uitzondering niet als deploymechanisme: de volgende succesvolle
-pipeline op `master` overschrijft `pages` weer met de gebouwde website.
+Als een publicatie fout is, draai de foutieve commit terug en push de revert
+naar `master`. Dezelfde workflow bouwt en publiceert dan de vorige goede staat.

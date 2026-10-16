@@ -1,22 +1,22 @@
-# Merge Checks
+# Merge checks
 
 Use pull requests for changes to this starter when sharing the repository with other maintainers, and protect the default branch.
 
-## Required Checks
+## Required checks
 
-Require the `Woodpecker / checks` status check before merge. The check step runs `npm run ci`, including formatting, linting, Astro diagnostics, unit tests, static build, and smoke e2e coverage.
+Require the `Pages / quality` status check before merge. The job runs `npm run ci`, including formatting, linting, Astro diagnostics, unit tests, a static build, and generic smoke E2E coverage.
 
-Do not expose deployment secrets to pull requests. The `deploy-codeberg-pages` step only runs for pushes to `master`, after checks pass, and publishes the generated `dist/` output to the Codeberg Pages `pages` branch.
+The `Pages / deploy` job only runs after a successful build from `master` or a manual workflow run. Pull requests never receive Pages write or OIDC permissions.
 
-## Branch Protection
+## Branch protection
 
-The current repository uses `master`. For repositories using `main`, apply settings to `main` and update `.woodpecker.yml` branch filters.
+The current repository uses `master`. For repositories using `main`, apply settings to `main` and update `.github/workflows/pages.yml` branch filters.
 
 Recommended branch protection:
 
 - Require pull request before merging.
-- Require `Woodpecker / checks` to pass before merging.
+- Require `Pages / quality` to pass before merging.
 - Require branches to be up to date before merging if the repository has multiple active contributors.
 - Block force pushes and direct pushes to the protected branch.
 
-If local commands and Woodpecker status checks diverge, treat the workflow documentation as a bug and update both places in the same change.
+If local commands and GitHub status checks diverge, treat the workflow documentation as a bug and update both places in the same change.
